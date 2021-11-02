@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,4 +47,22 @@ public class NomenclatureController {
     public void deleteOne(@PathVariable("id") Nomenclature nomenclature) {
         nomenclatureRepo.delete(nomenclature);
     }
+//
+//    private static List<Nomenclature> testList = new ArrayList<>();
+//
+//    static {
+//        for (int i = 0; i < 10; i++) {
+//            Nomenclature n = new Nomenclature();
+//            n.setId((long) i);
+//            n.setGroupId((long) i + 1000);
+//            n.setName("Nomenclature No." + (i + 1));
+//            n.setPrice((long) (i * 5));
+//            testList.add(n);
+//        }
+//    }
+//
+//    @PostConstruct
+//    public void init() {
+//        nomenclatureRepo.saveAll(testList);
+//    }
 }
