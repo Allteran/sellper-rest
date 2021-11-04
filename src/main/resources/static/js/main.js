@@ -1,15 +1,5 @@
 var nomenclatureApi = Vue.resource('/nomenclature/{id}')
 
-
-// Vue.component('nom-row', {
-//     props: ['nom'],
-//     template:
-//         '<tr>'+
-//             '<th scope="row"> {{ nom.name }}</th>' +
-//             '<td>{{ nom.price }}</td>'+
-//         '</tr>'
-// });
-
 Vue.component('nom-list', {
     props: ['nomList'],
     template:
