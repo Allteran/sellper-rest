@@ -1,0 +1,154 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>Registration | Sellper</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: -ms-flexbox;
+            display: -webkit-box;
+            display: flex;
+            -ms-flex-align: center;
+            -ms-flex-pack: center;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-signin input[type="tel"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        #inputDealerId {
+            margin: 15px 0px -1px;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: -1px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .form-signin input[type="text"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+<body>
+<body class="text-center">
+<form class="form-signin needs-validation" th:action="@{/registration}" method="post" name="userForm" novalidate>
+    <h1 class="h3 mb-3 front-weight-normal">Регистрация</h1>
+
+    <label for="inputFirstName" class="sr-only">Имя</label>
+    <input type="text" name="firstName" id="inputFirstName"
+           class="form-control"
+           placeholder="Имя" required autofocus>
+    <div th:if="${firstNameError}" class="invalid-feedback">
+        <a th:text="${firstNameError}"></a>
+    </div>
+    <label for="inputLastName" class="sr-only">Фамилия</label>
+    <input type="text" name="lastName" id="inputLastName"
+           class="form-control" placeholder="Фамилия" required autofocus>
+    <div th:if="${lastNameError}" class="invalid-feedback">
+        ${lastNameError}
+    </div>
+
+    <div class="mb-3"></div>
+
+    <label for="inputPhone" class="sr-only">Номер телефона</label>
+    <input type="tel" name="phone" id="inputPhone" class="form-control"
+           pattern="79[0-9]{9}" placeholder="79XXXXXXXXX" required autofocus>
+    <!--    <div th:if="${phoneError}" class="invalid-feedback">-->
+    <div th:if="${phoneError}" class="invalid-feedback">
+        ${phoneError}
+    </div>
+    <div class="mb-3"></div>
+
+    <label for="inputPassword" class="sr-only">Пароль</label>
+    <input type="password" id="inputPassword" name="password"
+           class="form-control" placeholder="Пароль" required>
+    <div th:if="${passwordError}" class="invalid-feedback">
+        ${passwordError}
+    </div>
+    <label for="inputPasswordConfirm" class="sr-only">Подтверждение пароля</label>
+    <input type="password" id="inputPasswordConfirm" name="passwordConfirm"
+           class="form-control" placeholder="Повторите пароль"
+           required>
+    <div th:if="${passwordConfirmError}" class="invalid-feedback">
+        ${passwordConfirmError}
+    </div>
+    <label for="inputDealerId" class="sr-only">Ваш дилер</label>
+    <input type="text" name="dealerId" id="inputDealerId" class="form-control"
+           pattern="[0-9]{9}" placeholder="79XXXXXXXXX" required autofocus>
+    <!--    <div th:if="${phoneError}" class="invalid-feedback">-->
+    <div th:if="${dealerIdError}" class="invalid-feedback">
+        ${dealerIdError}
+    </div>
+    <!--    <label for="inputDealer" class="sr-only">Ваш дилер</label>-->
+    <!--    <select class="custom-select" name="dealer" id="inputDealer">-->
+    <!--        <#list dealers as dealer>-->
+    <!--        <option value="${dealer.id}">${dealer.name}</option>-->
+    <!--    </#list>-->
+    <!--    </select>-->
+    <!--    <div class="text-left invalid-feedback m-1 ml-11">-->
+    <!--        <#if (dealerError)?? >-->
+    <!--        ${dealerError}-->
+
+    <div class="mb-3"></div>
+    <input type="hidden" name="_csrf" value="${_csrf.token}">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
+</form>
+</body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

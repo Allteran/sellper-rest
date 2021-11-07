@@ -16,9 +16,13 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userRepo.findByPhone(s);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("User with phone number " + s + " not found");
         }
         return user;
+    }
+
+    public User findByPhone(String phone) {
+        return userRepo.findByPhone(phone);
     }
 }
