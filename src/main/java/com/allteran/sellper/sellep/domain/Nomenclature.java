@@ -18,7 +18,10 @@ public class Nomenclature {
 
     @JsonView(Views.IdAndName.class)
     private String name;
-    private Long groupId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_id")
+    private NomenclatureGroup group;
     private Long price;
 
     public Long getId() {
@@ -37,12 +40,12 @@ public class Nomenclature {
         this.name = name;
     }
 
-    public Long getGroupId() {
-        return groupId;
+    public NomenclatureGroup getGroup() {
+        return group;
     }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
+    public void setGroup(NomenclatureGroup group) {
+        this.group = group;
     }
 
     public Long getPrice() {

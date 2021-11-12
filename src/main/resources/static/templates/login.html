@@ -71,10 +71,8 @@
 <form class="form-signin" th:action="@{/login}" method="post">
 
     <!--    <#if (alertMessage)??>-->
-    <div th:if="${alertMessage}" class="mb-3">
-        <div class="alert alert-success" role="alert">
-            ${alertMessage}
-        </div>
+    <div th:if="${alertMessage}" class="alert alert-success mb-3" role="alert">
+        <a th:text="${alertMessage}"></a>
     </div>
     <!--</#if>-->
     <h1 class="h3 mb-3 front-weight-normal">Авторизация</h1>

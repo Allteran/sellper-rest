@@ -80,58 +80,44 @@
 
     <label for="inputFirstName" class="sr-only">Имя</label>
     <input type="text" name="firstName" id="inputFirstName"
-           class="form-control"
+           th:classappend="${firstNameError} ? 'form-control is-invalid' : 'form-control'"
            placeholder="Имя" required autofocus>
-    <div th:if="${firstNameError}" class="invalid-feedback">
+    <div th:if="${firstNameError}" class="text-left invalid-feedback m-1 ml-1">
         <a th:text="${firstNameError}"></a>
     </div>
     <label for="inputLastName" class="sr-only">Фамилия</label>
     <input type="text" name="lastName" id="inputLastName"
-           class="form-control" placeholder="Фамилия" required autofocus>
-    <div th:if="${lastNameError}" class="invalid-feedback">
-        ${lastNameError}
+           th:classappend="${lastNameError} ? 'form-control is-invalid' : 'form-control'"
+           placeholder="Фамилия" required autofocus>
+    <div th:if="${lastNameError}" class="text-left invalid-feedback m-1 ml-1">
+        <a th:text="${lastNameError}"></a>
     </div>
 
     <div class="mb-3"></div>
 
     <label for="inputPhone" class="sr-only">Номер телефона</label>
-    <input type="tel" name="phone" id="inputPhone" class="form-control"
+    <input type="tel" name="phone" id="inputPhone"
+           th:classappend="${phoneError} ? 'form-control is-invalid' : 'form-control'"
            pattern="79[0-9]{9}" placeholder="79XXXXXXXXX" required autofocus>
-    <!--    <div th:if="${phoneError}" class="invalid-feedback">-->
-    <div th:if="${phoneError}" class="invalid-feedback">
-        ${phoneError}
+    <div th:if="${phoneError}" class="text-left invalid-feedback m-1 ml-1">
+        <a th:text="${phoneError}"></a>
     </div>
     <div class="mb-3"></div>
 
     <label for="inputPassword" class="sr-only">Пароль</label>
     <input type="password" id="inputPassword" name="password"
-           class="form-control" placeholder="Пароль" required>
-    <div th:if="${passwordError}" class="invalid-feedback">
-        ${passwordError}
+           th:classappend="${passwordError} ? 'form-control is-invalid' : 'form-control'"
+           placeholder="Пароль" required>
+    <div th:if="${passwordError}" class="text-left invalid-feedback m-1 ml-1">
+        <a th:text="${passwordError}"></a>
     </div>
     <label for="inputPasswordConfirm" class="sr-only">Подтверждение пароля</label>
     <input type="password" id="inputPasswordConfirm" name="passwordConfirm"
-           class="form-control" placeholder="Повторите пароль"
-           required>
-    <div th:if="${passwordConfirmError}" class="invalid-feedback">
-        ${passwordConfirmError}
+           th:classappend="${passwordConfirmError} ? 'form-control is-invalid' : 'form-control'"
+           placeholder="Повторите пароль" required>
+    <div th:if="${passwordConfirmError}" class="text-left invalid-feedback m-1 ml-1">
+        <a th:text="${passwordConfirmError}"></a>
     </div>
-    <label for="inputDealerId" class="sr-only">Ваш дилер</label>
-    <input type="text" name="dealerId" id="inputDealerId" class="form-control"
-           pattern="[0-9]{9}" placeholder="79XXXXXXXXX" required autofocus>
-    <!--    <div th:if="${phoneError}" class="invalid-feedback">-->
-    <div th:if="${dealerIdError}" class="invalid-feedback">
-        ${dealerIdError}
-    </div>
-    <!--    <label for="inputDealer" class="sr-only">Ваш дилер</label>-->
-    <!--    <select class="custom-select" name="dealer" id="inputDealer">-->
-    <!--        <#list dealers as dealer>-->
-    <!--        <option value="${dealer.id}">${dealer.name}</option>-->
-    <!--    </#list>-->
-    <!--    </select>-->
-    <!--    <div class="text-left invalid-feedback m-1 ml-11">-->
-    <!--        <#if (dealerError)?? >-->
-    <!--        ${dealerError}-->
 
     <div class="mb-3"></div>
     <input type="hidden" name="_csrf" value="${_csrf.token}">

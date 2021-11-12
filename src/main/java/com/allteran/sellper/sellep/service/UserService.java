@@ -1,17 +1,25 @@
 package com.allteran.sellper.sellep.service;
 
+import com.allteran.sellper.sellep.domain.Role;
 import com.allteran.sellper.sellep.domain.User;
 import com.allteran.sellper.sellep.repo.UserRepo;
+import com.allteran.sellper.sellep.util.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -24,5 +32,19 @@ public class UserService implements UserDetailsService {
 
     public User findByPhone(String phone) {
         return userRepo.findByPhone(phone);
+    }
+
+    public boolean addUser(User user) {
+        User userFromDb = findByPhone(user.getPhone());
+        if (userFromDb != null) {
+            return false;
+        }
+        user.setLastVisit(LocalDateTime.now());
+        user.setRoles(Collections.singleton(Role.USER));
+        user.setDealerId(Const.DEFAULT_DEALER_ID);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        userRepo.save(user);
+        return true;
     }
 }
