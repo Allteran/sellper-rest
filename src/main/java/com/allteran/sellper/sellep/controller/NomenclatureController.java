@@ -1,6 +1,7 @@
 package com.allteran.sellper.sellep.controller;
 
 import com.allteran.sellper.sellep.domain.Nomenclature;
+import com.allteran.sellper.sellep.domain.NomenclatureGroup;
 import com.allteran.sellper.sellep.repo.NomenclatureGroupRepo;
 import com.allteran.sellper.sellep.repo.NomenclatureRepo;
 import org.springframework.beans.BeanUtils;
@@ -10,6 +11,8 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,7 +29,8 @@ public class NomenclatureController {
 
     @GetMapping
     public List<Nomenclature> getList() {
-        return nomenclatureRepo.findAll();
+        List<Nomenclature> list = nomenclatureRepo.findAll();
+        return list;
     }
 
     @GetMapping("{id}")

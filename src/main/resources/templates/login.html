@@ -1,4 +1,7 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -70,11 +73,9 @@
 <body class="text-center">
 <form class="form-signin" th:action="@{/login}" method="post">
 
-    <!--    <#if (alertMessage)??>-->
     <div th:if="${alertMessage}" class="alert alert-success mb-3" role="alert">
         <a th:text="${alertMessage}"></a>
     </div>
-    <!--</#if>-->
     <h1 class="h3 mb-3 front-weight-normal">Авторизация</h1>
     <label for="inputPhone" class="sr-only">Номер телефона</label>
     <input type="tel" name="username" id="inputPhone" class="form-control"
