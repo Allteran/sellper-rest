@@ -11,7 +11,7 @@
     <groupId>com.allteran.sellper</groupId>
     <artifactId>sellep</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sellep</name>
+    <name>sellper</name>
     <description>Sellper (Seller Helper) is a Web App for seller of special retail to calculate their sallary, sales and
         so on
     </description>
