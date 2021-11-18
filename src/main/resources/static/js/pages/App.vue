@@ -1,7 +1,21 @@
 <template>
-  <div>
-    <nom-list :nomList="nomList"/>
-  </div>
+  <v-app>
+    <v-app-bar>
+      <v-toolbar-title>Sellper</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon href="/logout">
+        <v-icon>mdi-exit-to-app</v-icon>
+      </v-btn>
+    </v-app-bar>
+    <v-main>
+      <v-container>
+        <nom-list :nomList="nomList"/>
+      </v-container>
+    </v-main>
+
+  </v-app>
 </template>
 
 <script>

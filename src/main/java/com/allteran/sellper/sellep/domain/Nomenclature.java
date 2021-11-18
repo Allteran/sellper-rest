@@ -16,12 +16,15 @@ public class Nomenclature {
     @JsonView(Views.Id.class)
     private Long id;
 
-    @JsonView(Views.IdAndName.class)
+    @JsonView(Views.IdNamePrice.class)
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
+    @JsonView(Views.FullNomenclature.class)
     private NomenclatureGroup group;
+
+    @JsonView(Views.IdNamePrice.class)
     private Long price;
 
     public Long getId() {

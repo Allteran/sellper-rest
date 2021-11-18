@@ -1,8 +1,10 @@
 package com.allteran.sellper.sellep.controller;
 
+import com.allteran.sellper.sellep.domain.User;
 import com.allteran.sellper.sellep.repo.NomenclatureRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +25,12 @@ public class MainController {
     }
 
     @GetMapping
-    public String index(Model model) {
+    public String index(Model model, @AuthenticationPrincipal User user) {
         HashMap<Object, Object> data = new HashMap<>();
 
-        data.put("nomList", nomenclatureRepo.findAll());
-
+        if (user != null) {
+            data.put("nomList", nomenclatureRepo.findAll());
+        }
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));
 

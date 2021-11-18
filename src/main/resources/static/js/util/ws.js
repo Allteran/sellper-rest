@@ -1,24 +1,28 @@
-var stompClient = null;
+import SockJS from 'sockjs-client'
+import {Stomp} from '@stomp/stompjs'
+
+let stompClient = null
 
 export function connect() {
-    const socket = new SockJS('/gs-guide-websocket');
-    stompClient = Stomp.over(socket);
+    const socket = new SockJS('/gs-guide-websocket')
+    stompClient = Stomp.over(socket)
+    stompClient.debug = () => { }
     stompClient.connect({}, frame => {
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/activity',nomenclature => {
-            // showGreeting(JSON.parse(greeting.body).content);
-        });
-    });
+        console.log('Connected: ' + frame)
+        stompClient.subscribe('/topic/activity', nomenclature => {
+            // showGreeting(JSON.parse(greeting.body).content)
+        })
+    })
 }
 
 export function disconnect() {
     if (stompClient !== null) {
-        stompClient.disconnect();
+        stompClient.disconnect()
     }
-    setConnected(false);
-    console.log("Disconnected");
+    setConnected(false)
+    console.log("Disconnected")
 }
 
 export function sendNomenclature(nomenclature) {
-    stompClient.send("/app/changeNomenclature", {}, JSON.stringify(nomenclature));
+    stompClient.send("/app/changeNomenclature", {}, JSON.stringify(nomenclature))
 }

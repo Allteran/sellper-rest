@@ -9,13 +9,20 @@
     "start": "webpack-dev-server"
   },
   "dependencies": {
+    "@stomp/stompjs": "^6.1.2",
+    "sockjs-client": "^1.5.2",
     "vue": "^2.6.14",
-    "vue-resource": "^1.5.3"
+    "vue-resource": "^1.5.3",
+    "vuetify": "^2.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "deepmerge": "^4.2.2",
+    "sass": "~1.32",
+    "sass-loader": "^12.3.0",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",
     "webpack": "^5.64.0",
