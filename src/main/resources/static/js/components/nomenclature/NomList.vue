@@ -1,8 +1,7 @@
 <template>
   <v-data-table
       :headers="headers"
-      :items="nomList"
-      sort-by="id"
+      :items="sortedNomList"
       class="elevation-1"
   >
     <template v-slot:top>
@@ -84,7 +83,7 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">ВНИМАНИЕ! Вы уверены, что хотите удалить товар?</v-card-title>
+            <v-card-title class="text-h5">Вы уверены, что хотите удалить товар?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Отмена</v-btn>
@@ -110,14 +109,6 @@
         mdi-delete
       </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn
-          color="primary"
-          @click="initialize"
-      >
-        Обновить
-      </v-btn>
-    </template>
   </v-data-table>
 </template>
 
@@ -137,6 +128,7 @@ export default {
         value: 'name',
       },
       {text: 'Цена', value: 'price'},
+      {text: 'Действия', value: 'actions', sortable: false},
     ],
     editedIndex: -1,
     editedItem: {
@@ -148,13 +140,14 @@ export default {
       price: 0,
     },
   }),
-
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Создание' : 'Редактирование'
     },
+    sortedNomList() {
+      return this.nomList.sort((a, b) => -(a.id - b.id))
+    }
   },
-
   watch: {
     dialog(val) {
       val || this.close()
@@ -165,13 +158,9 @@ export default {
   },
   methods: {
     editItem(item) {
-      nomenclatureApi.update(item).then(result => {
-        result.json().then(() => {
-          this.editedIndex = this.nomList.indexOf(item)
-          this.editedItem = Object.assign({}, item)
-          this.dialog = true
-        })
-      })
+      this.editedIndex = this.nomList.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialog = true
     },
 
     deleteItem(item) {
@@ -206,14 +195,24 @@ export default {
     },
 
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.nomList[this.editedIndex], this.editedItem)
+      if(this.editedItem.id) {
+        nomenclatureApi.update(this.editedItem).then(result =>
+            result.json().then(data => {
+              const index = this.nomList.findIndex(item => item.id === data.id)
+              this.nomList.splice(index, 1, data)
+            })
+        )
       } else {
-        nomenclatureApi.add(this.editedItem).then(result => {
-          result.json().then(() => {
-            this.nomList.push(this.editedItem)
-          })
-        })
+        nomenclatureApi.add(this.editedItem).then(result =>
+            result.json().then(data => {
+              const index = this.nomList.findIndex(item => item.id === data.id)
+              if (index > -1) {
+                this.nomList.splice(index, 1, data)
+              } else {
+                this.nomList.push(data)
+              }
+            })
+        )
       }
       this.close()
     },
