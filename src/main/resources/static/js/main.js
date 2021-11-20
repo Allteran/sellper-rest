@@ -5,7 +5,9 @@ import App from 'pages/App.vue'
 import {connect} from "./util/ws"
 import 'vuetify/dist/vuetify.min.css'
 
-connect()
+if(frontendData.profile) {
+    connect()
+}
 
 Vue.use(Vuetify)
 

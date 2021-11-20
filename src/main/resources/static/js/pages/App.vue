@@ -36,7 +36,11 @@ export default {
   data() {
     return {
       nomList: frontendData.nomList,
+      profile: frontendData.profile
     }
+  },
+  created() {
+
   }
 }
 </script>

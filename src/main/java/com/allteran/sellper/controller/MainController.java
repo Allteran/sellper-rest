@@ -30,11 +30,8 @@ public class MainController {
 
         if (user != null) {
             data.put("nomList", nomenclatureRepo.findAll());
+            data.put("profile", user);
         }
-        System.out.println("ss");
-        System.out.println("ss");
-        System.out.println("ss");
-        System.out.println("ss");
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));
 

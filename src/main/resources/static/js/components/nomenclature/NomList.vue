@@ -122,8 +122,10 @@
 </template>
 
 <script>
+import nomenclatureApi from 'api/nomList'
+
 export default {
-  props:['nomList'],
+  props: ['nomList'],
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -161,17 +163,15 @@ export default {
       val || this.closeDelete()
     },
   },
-
-  created() {
-    this.initialize()
-  },
-
   methods: {
-
     editItem(item) {
-      this.editedIndex = this.nomList.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+      nomenclatureApi.update(item).then(result => {
+        result.json().then(() => {
+          this.editedIndex = this.nomList.indexOf(item)
+          this.editedItem = Object.assign({}, item)
+          this.dialog = true
+        })
+      })
     },
 
     deleteItem(item) {
@@ -181,8 +181,12 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.nomList.splice(this.editedIndex, 1)
-      this.closeDelete()
+      nomenclatureApi.remove(this.editedItem.id).then(result => {
+        if (result.ok) {
+          this.nomList.splice(this.editedIndex, 1)
+          this.closeDelete()
+        }
+      })
     },
 
     close() {
@@ -205,7 +209,11 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.nomList[this.editedIndex], this.editedItem)
       } else {
-        this.nomList.push(this.editedItem)
+        nomenclatureApi.add(this.editedItem).then(result => {
+          result.json().then(() => {
+            this.nomList.push(this.editedItem)
+          })
+        })
       }
       this.close()
     },

@@ -1,7 +1,8 @@
 import SockJS from 'sockjs-client'
-import {Stomp} from '@stomp/stompjs'
+import { Stomp } from '@stomp/stompjs'
 
 let stompClient = null
+const handlers = []
 
 export function connect() {
     const socket = new SockJS('/gs-guide-websocket')
@@ -11,15 +12,19 @@ export function connect() {
         console.log('Connected: ' + frame)
         stompClient.subscribe('/topic/activity', nomenclature => {
             // showGreeting(JSON.parse(greeting.body).content)
+            handlers.forEach(handler => handler(JSON.parse(nomenclature.body)))
         })
     })
+}
+
+export function addHandler(handler) {
+    handlers.push(handler)
 }
 
 export function disconnect() {
     if (stompClient !== null) {
         stompClient.disconnect()
     }
-    setConnected(false)
     console.log("Disconnected")
 }
 
