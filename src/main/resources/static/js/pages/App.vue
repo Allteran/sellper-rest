@@ -31,14 +31,8 @@ import NomList from 'components/nomenclature/NomList.vue'
 Vue.component('nom-list', NomList)
 
 export default {
-  comments: {
+  components: {
     NomList
-  },
-  data() {
-    return {
-      nomList: frontendData.nomList,
-      profile: frontendData.profile
-    }
   },
   // created() {
   //   addHandler(data => {

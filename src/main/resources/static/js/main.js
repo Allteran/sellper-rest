@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import '@babel/polyfill'
 import 'api/resource'
 import App from 'pages/App.vue'
+import store from 'store/store'
 // import {connect} from "./util/ws"
 import 'vuetify/dist/vuetify.min.css'
 
@@ -9,10 +11,12 @@ import 'vuetify/dist/vuetify.min.css'
 //     connect()
 // }
 
+
 Vue.use(Vuetify)
 
 new Vue({
-    vuetify : new Vuetify(),
+    vuetify: new Vuetify(),
     el: "#app",
+    store: store,
     render: a => a(App)
 })

@@ -41,7 +41,7 @@
                   <v-col
                       cols="12"
                       sm="6"
-                      md="4"
+                      md="6"
                   >
                     <v-text-field
                         v-model="editedItem.name"
@@ -51,12 +51,12 @@
                   <v-col
                       cols="12"
                       sm="6"
-                      md="4"
+                      md="6"
                   >
-                    <v-text-field
-                        v-model="editedItem.price"
-                        label="Цена"
-                    ></v-text-field>
+                  <v-text-field
+                      v-model="editedItem.price"
+                      label="Цена"
+                  ></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -114,9 +114,9 @@
 
 <script>
 import nomenclatureApi from 'api/nomList'
+import { mapGetters } from 'vuex'
 
 export default {
-  props: ['nomList'],
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -141,11 +141,9 @@ export default {
     },
   }),
   computed: {
+    ...mapGetters(['sortedNomList']),
     formTitle() {
       return this.editedIndex === -1 ? 'Создание' : 'Редактирование'
-    },
-    sortedNomList() {
-      return this.nomList.sort((a, b) => -(a.id - b.id))
     }
   },
   watch: {
@@ -195,7 +193,7 @@ export default {
     },
 
     save() {
-      if(this.editedItem.id) {
+      if (this.editedItem.id) {
         nomenclatureApi.update(this.editedItem).then(result =>
             result.json().then(data => {
               const index = this.nomList.findIndex(item => item.id === data.id)
