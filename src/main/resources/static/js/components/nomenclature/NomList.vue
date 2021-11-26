@@ -53,10 +53,10 @@
                       sm="6"
                       md="6"
                   >
-                  <v-text-field
-                      v-model="editedItem.price"
-                      label="Цена"
-                  ></v-text-field>
+                    <v-text-field
+                        v-model="editedItem.price"
+                        label="Цена"
+                    ></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -114,7 +114,7 @@
 
 <script>
 import nomenclatureApi from 'api/nomList'
-import { mapGetters } from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   data: () => ({
@@ -142,6 +142,7 @@ export default {
   }),
   computed: {
     ...mapGetters(['sortedNomList']),
+    ...mapState(['nomList']),
     formTitle() {
       return this.editedIndex === -1 ? 'Создание' : 'Редактирование'
     }
@@ -155,6 +156,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addNomenclatureAction', 'updateNomenclatureAction', 'removeNomenclatureAction']),
     editItem(item) {
       this.editedIndex = this.nomList.indexOf(item)
       this.editedItem = Object.assign({}, item)
@@ -168,12 +170,10 @@ export default {
     },
 
     deleteItemConfirm() {
-      nomenclatureApi.remove(this.editedItem.id).then(result => {
-        if (result.ok) {
-          this.nomList.splice(this.editedIndex, 1)
-          this.closeDelete()
-        }
-      })
+      //AFTER REMOVE ACTION FOLLOWS ERROR
+      // Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'com.allteran.sellper.domain.Nomenclature'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [java.lang.Long] for value 'id,54,name,123,group,[object Object],price,123'; nested exception is java.lang.NumberFormatException: For input string: "id,54,name,123,group,[objectObject],price,123"]
+      this.removeNomenclatureAction(this.editedItem)
+      this.closeDelete()
     },
 
     close() {

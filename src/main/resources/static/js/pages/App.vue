@@ -4,14 +4,14 @@
       <v-toolbar-title>Sellper</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      <v-btn icon href="/logout">
+      <span v-if="profile">{{ profile.firstName }} {{ profile.lastName }}</span>
+      <v-btn v-if="profile" icon href="/logout">
         <v-icon>mdi-exit-to-app</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
-        <nom-list :nomList="nomList"/>
+        <nom-list/>
       </v-container>
     </v-main>
 
@@ -21,6 +21,7 @@
 <script>
 import Vue from 'vue'
 import NomList from 'components/nomenclature/NomList.vue'
+import {mapState} from 'vuex'
 // import {addHandler} from "../util/ws";
 
 /*
@@ -34,6 +35,7 @@ export default {
   components: {
     NomList
   },
+  computed: mapState(['profile'])
   // created() {
   //   addHandler(data => {
   //     if (data.objectType === 'NOMENCLATURE') {
