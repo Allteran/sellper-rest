@@ -57,7 +57,7 @@ export default new Vuex.Store({
             commit('updateNomenclatureMutation', data)
         },
         async removeNomenclatureAction({commit}, nomenclature) {
-            const result = await nomenclatureApi.remove(nomenclature)
+            const result = await nomenclatureApi.remove(nomenclature.id)
             if (result.ok) {
                 commit('removeNomenclatureMutation', nomenclature)
             }

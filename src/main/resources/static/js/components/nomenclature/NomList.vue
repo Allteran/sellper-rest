@@ -170,8 +170,6 @@ export default {
     },
 
     deleteItemConfirm() {
-      //AFTER REMOVE ACTION FOLLOWS ERROR
-      // Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'com.allteran.sellper.domain.Nomenclature'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [java.lang.Long] for value 'id,54,name,123,group,[object Object],price,123'; nested exception is java.lang.NumberFormatException: For input string: "id,54,name,123,group,[objectObject],price,123"]
       this.removeNomenclatureAction(this.editedItem)
       this.closeDelete()
     },
@@ -194,23 +192,9 @@ export default {
 
     save() {
       if (this.editedItem.id) {
-        nomenclatureApi.update(this.editedItem).then(result =>
-            result.json().then(data => {
-              const index = this.nomList.findIndex(item => item.id === data.id)
-              this.nomList.splice(index, 1, data)
-            })
-        )
+        this.updateNomenclatureAction(this.editedItem)
       } else {
-        nomenclatureApi.add(this.editedItem).then(result =>
-            result.json().then(data => {
-              const index = this.nomList.findIndex(item => item.id === data.id)
-              if (index > -1) {
-                this.nomList.splice(index, 1, data)
-              } else {
-                this.nomList.push(data)
-              }
-            })
-        )
+        this.addNomenclatureAction(this.editedItem)
       }
       this.close()
     },
