@@ -1,34 +1,122 @@
 <template>
   <v-container>
-    <v-layout justify-space-around
-    >
-      <v-flex>
-        <div class="title mb-3">Профиль пользователя</div>
-        <v-layout row justify-space-between>
-          <v-flex class="px-1">
-            <v-layout column>
-              <v-flex>Имя</v-flex>
-              <v-flex>Фамилия</v-flex>
-              <v-flex>Номер телефона</v-flex>
-              <v-flex>Дилер</v-flex>
-            </v-layout>
-          </v-flex>
-          <v-flex class="px-1">
-            <v-layout column>
-              <v-flex>{{ profile.firstName }}</v-flex>
-              <v-flex>{{ profile.lastName }}</v-flex>
-              <v-flex>{{ profile.phone }}</v-flex>
-              <v-flex>{{ profile.dealerId }}</v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-btn
-          elevation="7"
+    <v-row>
+      <v-col>
+        <div class="title">Профиль пользователя</div>
+      </v-col>
+      <v-col
+          class="d-flex justify-end"
       >
-        Редактировать профиль
-      </v-btn>
-    </v-layout>
+        <v-btn
+            tile
+            @click="profileEditPage"
+        >
+          <v-icon left>
+            mdi-pencil
+          </v-icon>
+          Редактировать профиль
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <v-container class="grey lighten-5">
+      <v-row no-gutters>
+        <v-col
+            md="3"
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            Имя
+          </v-card>
+        </v-col>
+        <v-col
+
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            {{ profile.firstName }}
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col
+            md="3"
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            Фамилия
+          </v-card>
+        </v-col>
+        <v-col
+
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            {{ profile.lastName }}
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col
+            md="3"
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            Номер телефона
+          </v-card>
+        </v-col>
+        <v-col
+
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            {{ profile.phone }}
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col
+            md="3"
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            Дилер
+          </v-card>
+        </v-col>
+        <v-col
+
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            {{ profile.dealerId }}
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-container>
 </template>
 
@@ -37,7 +125,12 @@ import {mapState} from "vuex"
 
 export default {
   name: 'Profile',
-  computed: mapState(['profile'])
+  computed: mapState(['profile']),
+  methods: {
+    profileEditPage() {
+      this.$router.push('/profileEdit')
+    }
+  }
 }
 </script>
 
