@@ -12,7 +12,7 @@ export default new Vuex.Store({
     },
     getters: {
         sortedNomList: state => {
-            return state.nomList.sort((a, b) => -(a.id - b.id))
+            return (state.nomList || []).sort((a, b) => -(a.id - b.id))
         }
     },
     mutations: {

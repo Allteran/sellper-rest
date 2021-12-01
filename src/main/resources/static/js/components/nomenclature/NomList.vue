@@ -113,7 +113,6 @@
 </template>
 
 <script>
-import nomenclatureApi from 'api/nomList'
 import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
