@@ -116,6 +116,32 @@
           </v-card>
         </v-col>
       </v-row>
+      <v-row no-gutters>
+        <v-col
+            md="3"
+        >
+          <v-card
+              class="pa-2"
+              outlined
+              tile
+          >
+            Права
+          </v-card>
+        </v-col>
+        <v-col
+        >
+            <v-card
+                class="pa-2"
+                outlined
+                tile
+            >
+              <span
+                  v-for="role in roles"
+                  :key="role"
+              >{{ role }} / </span>
+            </v-card>
+        </v-col>
+      </v-row>
     </v-container>
   </v-container>
 </template>
@@ -126,6 +152,22 @@ import {mapState} from "vuex"
 export default {
   name: 'Profile',
   computed: mapState(['profile']),
+  data() {
+    return {
+      roles: []
+    }
+  },
+  beforeMount() {
+    for(let i = 0; i<this.profile.roles.length; i++) {
+      if (this.profile.roles[i] === 'ADMIN') {
+        this.roles.push('Администратор')
+      } else if (this.profile.roles[i] === 'MANAGER') {
+        this.roles.push('Менеджер')
+      } else if (this.profile.roles[i] === 'USER') {
+        this.roles.push('Продавец')
+      }
+    }
+  },
   methods: {
     profileEditPage() {
       this.$router.push('/profileEdit')
