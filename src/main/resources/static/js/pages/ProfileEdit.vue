@@ -55,7 +55,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                  color="primary"
+                  color="secondary"
                   dark
                   v-bind="attrs"
                   v-on="on"
@@ -123,11 +123,19 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-btn
+        title
+        color="primary"
+        @click="updateProfile"
+    >
+      Сохранить изменения
+    </v-btn>
   </v-form>
 </template>
 
 <script>
 import {mapState} from "vuex"
+import {mapActions} from "vuex/dist/vuex.esm.browser";
 
 export default {
   name: 'ProfileEdit',
@@ -162,6 +170,18 @@ export default {
     console.log(this);
   },
   methods: {
+    ...mapActions(['updateProfileAction']),
+
+    updateProfile() {
+      this.validate()
+      console.log('updateProfile...')
+      console.log('valid = ', this.valid)
+      console.log('profile = ', this.profile)
+      if(this.valid) {
+        this.updateProfileAction(this.profile)
+      }
+    },
+
     saveChangePassword() {
       this.validate()
       if(this.valid) {

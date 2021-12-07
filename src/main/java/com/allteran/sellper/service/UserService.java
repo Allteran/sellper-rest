@@ -4,6 +4,7 @@ import com.allteran.sellper.domain.Role;
 import com.allteran.sellper.domain.User;
 import com.allteran.sellper.repo.UserRepo;
 import com.allteran.sellper.util.Const;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -47,5 +49,18 @@ public class UserService implements UserDetailsService {
 
         userRepo.save(user);
         return true;
+    }
+
+    public User updateUser(User user) {
+        return userRepo.save(user);
+    }
+
+    public User updatePassword(User user, String password) {
+        user.setPassword(passwordEncoder.encode(password));
+        return updateUser(user);
+    }
+
+    public List<User> findAll() {
+        return userRepo.findAll();
     }
 }

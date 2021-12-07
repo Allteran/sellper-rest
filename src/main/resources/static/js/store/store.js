@@ -2,6 +2,7 @@ import Vue from 'vue'
 import 'es6-promise/auto' //to support old browsers
 import Vuex from 'vuex'
 import nomenclatureApi from "../api/nomList";
+import profileApi from "../api/user";
 
 Vue.use(Vuex)
 
@@ -38,6 +39,9 @@ export default new Vuex.Store({
                     ...state.nomList.slice(index + 1)
                 ]
             }
+        },
+        updateProfileMutation(state, user) {
+            console.log(user)
         }
     },
     actions: {
@@ -61,6 +65,11 @@ export default new Vuex.Store({
             if (result.ok) {
                 commit('removeNomenclatureMutation', nomenclature)
             }
+        },
+        async updateProfileAction ({commit}, user) {
+            const result = await profileApi.update(user)
+            const data = await result.json()
+            commit('updateProfileMutation', data)
         }
     }
 })
