@@ -130,6 +130,37 @@
     >
       Сохранить изменения
     </v-btn>
+
+    <v-row justify="center">
+      <v-dialog
+          v-model="notificationDialog"
+          max-width="600"
+      >
+        <v-card>
+          <v-card-title class="text-h5">
+            Изменение данных профиля
+          </v-card-title>
+
+          <v-card-text>
+            Внимание! Для вступления изменений в силу необходимо перезайти в приложение.
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+
+            <v-btn
+                color="green darken-1"
+                text
+                @click="showProfile"
+            >
+              Понятно, сейчас сделаем
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+
   </v-form>
 </template>
 
@@ -146,6 +177,7 @@ export default {
     ...mapState(['profile']),
   },
   data: () => ({
+    notificationDialog: false,
     dialog: false,
     valid: false,
     errors: false,
@@ -174,11 +206,9 @@ export default {
 
     updateProfile() {
       this.validate()
-      console.log('updateProfile...')
-      console.log('valid = ', this.valid)
-      console.log('profile = ', this.profile)
       if(this.valid) {
         this.updateProfileAction(this.profile)
+        this.notificationDialog = true
       }
     },
 
@@ -196,6 +226,10 @@ export default {
     },
     validate() {
       this.valid = this.$refs.form.validate()
+    },
+    showProfile() {
+      this.notificationDialog = false
+      this.$router.push('/profile')
     }
   }
 }

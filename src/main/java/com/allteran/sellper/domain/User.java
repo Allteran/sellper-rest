@@ -1,5 +1,7 @@
 package com.allteran.sellper.domain;
 
+import com.allteran.sellper.util.UserAuthorityDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -62,6 +64,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonDeserialize(using = UserAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }

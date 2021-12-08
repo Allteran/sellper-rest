@@ -41,7 +41,9 @@ export default new Vuex.Store({
             }
         },
         updateProfileMutation(state, user) {
-            console.log(user)
+            console.log('updateProfileMutation...')
+            state.profile = user
+            console.log(state.profile)
         }
     },
     actions: {
