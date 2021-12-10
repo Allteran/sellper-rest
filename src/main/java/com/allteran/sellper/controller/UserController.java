@@ -2,7 +2,6 @@ package com.allteran.sellper.controller;
 
 import com.allteran.sellper.domain.User;
 import com.allteran.sellper.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +31,7 @@ public class UserController {
     public User updateProfile(
             @PathVariable("id") User userFromDb,
             @RequestBody User user) {
-        BeanUtils.copyProperties(user, userFromDb, "id");
-        return userService.updateUser(userFromDb);
+        return userService.updateUser(userFromDb, user);
     }
 
 }

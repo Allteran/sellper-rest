@@ -42,6 +42,7 @@ export default new Vuex.Store({
         },
         updateProfileMutation(state, user) {
             console.log('updateProfileMutation...')
+            state.profile = null
             state.profile = user
             console.log(state.profile)
         }
@@ -69,7 +70,13 @@ export default new Vuex.Store({
             }
         },
         async updateProfileAction ({commit}, user) {
-            const result = await profileApi.update(user)
+            let result
+            try{
+                result = await profileApi.update(user)
+            } catch (e) {
+                throw new Error('Incorrect password')
+            }
+
             const data = await result.json()
             commit('updateProfileMutation', data)
         }

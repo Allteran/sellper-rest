@@ -2,6 +2,7 @@ package com.allteran.sellper.service;
 
 import com.allteran.sellper.domain.Role;
 import com.allteran.sellper.domain.User;
+import com.allteran.sellper.exception.IncorrectPasswordException;
 import com.allteran.sellper.repo.UserRepo;
 import com.allteran.sellper.util.Const;
 import org.springframework.beans.BeanUtils;
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -43,7 +46,13 @@ public class UserService implements UserDetailsService {
             return false;
         }
         user.setLastVisit(LocalDateTime.now());
-        user.setRoles(Collections.singleton(Role.USER));
+        Set<Role> roles = new HashSet<>();
+        roles.add(Role.USER);
+        roles.add(Role.MANAGER);
+        roles.add(Role.ADMIN);
+
+        user.setRoles(roles);
+//        user.setRoles(Collections.singleton(Role.USER));
         user.setDealerId(Const.DEFAULT_DEALER_ID);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -51,13 +60,22 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public User updateUser(User user) {
-        return userRepo.save(user);
-    }
+    public User updateUser(User userFromDb, User user) {
+        String currentPassword = userFromDb.getPassword();
+        String enteredCurrentPassword = user.getPassword();
+        String newPassword = user.getNewPassword();
 
-    public User updatePassword(User user, String password) {
-        user.setPassword(passwordEncoder.encode(password));
-        return updateUser(user);
+        boolean isPasswordsMatches = passwordEncoder.matches(user.getPassword(), userFromDb.getPassword());
+        if(user.getNewPassword() != null) {
+            if(isPasswordsMatches) {
+                userFromDb.setPassword(passwordEncoder.encode(user.getPassword()));
+            } else {
+                throw new IncorrectPasswordException();
+            }
+        }
+
+        BeanUtils.copyProperties(user, userFromDb,"id", "password", "newPassword", "passwordConfirm");
+        return userRepo.save(userFromDb);
     }
 
     public List<User> findAll() {

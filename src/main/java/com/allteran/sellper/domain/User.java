@@ -23,6 +23,9 @@ public class User implements UserDetails {
     @Transient
     private String passwordConfirm;
 
+    @Transient
+    private String newPassword;
+
     private String firstName;
     private String lastName;
 
@@ -71,6 +74,14 @@ public class User implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     @Override
@@ -149,4 +160,5 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
 }

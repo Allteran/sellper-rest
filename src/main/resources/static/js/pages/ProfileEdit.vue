@@ -142,7 +142,7 @@
           </v-card-title>
 
           <v-card-text>
-            Внимание! Для вступления изменений в силу необходимо перезайти в приложение.
+            {{ notificationMessage }}
           </v-card-text>
 
           <v-card-actions>
@@ -181,6 +181,7 @@ export default {
     dialog: false,
     valid: false,
     errors: false,
+    notificationMessage: '',
     currentPassword:'',
     newPassword: '',
     newPasswordConfirm: '',
@@ -214,8 +215,27 @@ export default {
 
     saveChangePassword() {
       this.validate()
-      if(this.valid) {
+      if (this.valid) {
+
+        this.profile.password = this.currentPassword
+        this.profile.newPassword = this.newPassword
+
         this.dialog = false
+        let errorFlag = false
+
+        this.updateProfileAction(this.profile).catch(e => {
+          this.dialog = false
+          this.notificationMessage = 'Введенный текущий пароль некорректный. Пожалуйста, повторите попытку'
+          this.notificationDialog = true
+
+          errorFlag = true
+        })
+
+        if(!errorFlag) {
+          this.notificationMessage = 'Внимание! Для вступления изменений в силу необходимо выйти и зайти в приложение'
+          this.notificationDialog = true
+        }
+
       }
     },
     cancelChangePassword() {
