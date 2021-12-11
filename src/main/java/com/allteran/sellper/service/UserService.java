@@ -52,6 +52,7 @@ public class UserService implements UserDetailsService {
         roles.add(Role.ADMIN);
 
         user.setRoles(roles);
+        user.setActive(true);
 //        user.setRoles(Collections.singleton(Role.USER));
         user.setDealerId(Const.DEFAULT_DEALER_ID);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -61,10 +62,6 @@ public class UserService implements UserDetailsService {
     }
 
     public User updateUser(User userFromDb, User user) {
-        String currentPassword = userFromDb.getPassword();
-        String enteredCurrentPassword = user.getPassword();
-        String newPassword = user.getNewPassword();
-
         boolean isPasswordsMatches = passwordEncoder.matches(user.getPassword(), userFromDb.getPassword());
         if(user.getNewPassword() != null) {
             if(isPasswordsMatches) {

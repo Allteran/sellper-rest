@@ -30,6 +30,7 @@
       </v-btn>
       <v-btn text
              href="/"
+             v-if="isAdmin"
       >
         Пользователи
       </v-btn>
@@ -60,10 +61,22 @@ import {mapState} from 'vuex'
 
 export default {
   computed: mapState(['profile']),
+  data: () => ({
+    isAdmin: false,
+  }),
+  beforeMount() {
+    for(let i = 0; i<this.profile.roles.length; i++) {
+      if (this.profile.roles[i] === 'ADMIN') {
+        this.isAdmin = true
+        return
+      }
+    }
+    this.isAdmin = false
+  },
   methods: {
     showProfile() {
       this.$router.push('/profile')
-    }
+    },
   }
 }
 </script>

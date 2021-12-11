@@ -74,7 +74,7 @@ export default new Vuex.Store({
             try{
                 result = await profileApi.update(user)
             } catch (e) {
-                throw new Error('Incorrect password')
+                throw new Error('Entered current password is incorrect')
             }
 
             const data = await result.json()
