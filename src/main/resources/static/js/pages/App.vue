@@ -29,7 +29,7 @@
         Товары
       </v-btn>
       <v-btn text
-             href="/"
+             @click="showUserListPage"
              v-if="isAdmin"
       >
         Пользователи
@@ -39,7 +39,7 @@
       <v-btn
           text
           v-if="profile"
-          @click="showProfile"
+          @click="showProfilePage"
       >
         {{ profile.firstName }} {{ profile.lastName }}
       </v-btn>
@@ -74,9 +74,16 @@ export default {
     this.isAdmin = false
   },
   methods: {
-    showProfile() {
+    showProfilePage() {
       this.$router.push('/profile')
     },
+    showUserListPage() {
+      if(this.isAdmin) {
+        this.$router.push('/adm/users')
+      }else {
+        this.$router.push('/404')
+      }
+    }
   }
 }
 </script>

@@ -2,14 +2,15 @@ import Vue from 'vue'
 import 'es6-promise/auto' //to support old browsers
 import Vuex from 'vuex'
 import nomenclatureApi from "../api/nomList";
-import profileApi from "../api/user";
+import userApi from "../api/user";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
         nomList: frontendData.nomList,
-        profile: frontendData.profile
+        profile: frontendData.profile,
+        users: null
     },
     getters: {
         sortedNomList: state => {
@@ -45,6 +46,9 @@ export default new Vuex.Store({
             state.profile = null
             state.profile = user
             console.log(state.profile)
+        },
+        getAllUsersMutation(state, list) {
+            state.users = list
         }
     },
     actions: {
@@ -72,13 +76,18 @@ export default new Vuex.Store({
         async updateProfileAction ({commit}, user) {
             let result
             try{
-                result = await profileApi.update(user)
+                result = await userApi.update(user)
             } catch (e) {
                 throw new Error('Entered current password is incorrect')
             }
 
             const data = await result.json()
             commit('updateProfileMutation', data)
+        },
+        async getAllUsersAction({commit}) {
+            const result = await userApi.get()
+            const data = await result.json()
+            commit('getAllUsersMutation',data)
         }
     }
 })
