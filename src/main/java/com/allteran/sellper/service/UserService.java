@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -45,15 +44,15 @@ public class UserService implements UserDetailsService {
         if (userFromDb != null) {
             return false;
         }
-        user.setLastVisit(LocalDateTime.now());
-        Set<Role> roles = new HashSet<>();
-        roles.add(Role.USER);
-        roles.add(Role.MANAGER);
-        roles.add(Role.ADMIN);
-
-        user.setRoles(roles);
+        user.setCreationDate(LocalDateTime.now());
+//        Set<Role> roles = new HashSet<>();
+//        roles.add(Role.USER);
+//        roles.add(Role.MANAGER);
+//        roles.add(Role.ADMIN);
+//
+//        user.setRoles(roles);
         user.setActive(true);
-//        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(Role.USER));
         user.setDealerId(Const.DEFAULT_DEALER_ID);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

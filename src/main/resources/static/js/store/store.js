@@ -10,7 +10,7 @@ export default new Vuex.Store({
     state: {
         nomList: frontendData.nomList,
         profile: frontendData.profile,
-        users: null
+        users: []
     },
     getters: {
         sortedNomList: state => {

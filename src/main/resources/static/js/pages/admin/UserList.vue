@@ -1,29 +1,35 @@
 <template>
-  <v-main>
-    <div>Here is gonna be a list of users</div>
-    <div v-for="user in users">
-      <i>{{ user.phone }}</i>
-      <i>{{ user.firstName }}</i>
-      <i>{{ user.lastName }}</i>
-    </div>
-  </v-main>
+  <v-data-table
+      :headers="headers"
+      :items="users"
+      :items-per-page="15"
+      @click:row="clickRow"
+      class="elevation-1"
+  ></v-data-table>
 </template>
 
 <script>
 import {mapActions, mapState} from 'vuex'
-import userApi from 'api/user'
 
 export default {
-  // data:() =>({
-  //   users: null
-  // }),
+  data(){
+    return {
+      headers: [
+        {text: 'Телефон', align: 'start', sortable: false, value: 'phone'},
+        {text: 'Имя', value: 'firstName'},
+        {text: 'Фамилия', value: 'lastName'},
+        {text: 'Активен', value: 'active'},
+        {text: 'Права', value: 'roles'},
+        {text: 'Дата создания', value: 'creationDate'},
+      ]
+    }
+  },
   computed: {
     ...mapState(['profile', 'users']),
   },
   beforeMount() {
     for(let i = 0; i<this.profile.roles.length; i++) {
       if (this.profile.roles[i] === 'ADMIN') {
-
         this.getAllUsersAction()
         return
       }
@@ -31,7 +37,11 @@ export default {
     this.$router.push('/404')
   },
   methods: {
-    ...mapActions(['getAllUsersAction'])
+    ...mapActions(['getAllUsersAction']),
+    clickRow(item) {
+      console.log(item)
+    },
+
   }
 }
 </script>

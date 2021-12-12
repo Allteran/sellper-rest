@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private String dealerId;
     private boolean active;
 
-    private LocalDateTime lastVisit;
+    private LocalDateTime creationDate;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -145,12 +145,12 @@ public class User implements UserDetails {
         this.active = active;
     }
 
-    public LocalDateTime getLastVisit() {
-        return lastVisit;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public void setLastVisit(LocalDateTime lastVisit) {
-        this.lastVisit = lastVisit;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Set<Role> getRoles() {
