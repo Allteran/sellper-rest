@@ -10,7 +10,8 @@ export default new Vuex.Store({
     state: {
         nomList: frontendData.nomList,
         profile: frontendData.profile,
-        users: []
+        users: [],
+        roles: frontendData.roles,
     },
     getters: {
         sortedNomList: state => {
@@ -73,7 +74,7 @@ export default new Vuex.Store({
                 commit('removeNomenclatureMutation', nomenclature)
             }
         },
-        async updateProfileAction ({commit}, user) {
+        async updateUserAction({commit}, user) {
             let result
             try{
                 result = await userApi.update(user)

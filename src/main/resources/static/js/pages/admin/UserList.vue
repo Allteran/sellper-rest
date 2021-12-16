@@ -39,7 +39,9 @@ export default {
   methods: {
     ...mapActions(['getAllUsersAction']),
     clickRow(item) {
-      console.log(item)
+      console.log('clicked on row with user')
+      console.log('user.id = ', item.id)
+      this.$router.push({name: 'user-edit', params: {id: item.id}})
     },
 
   }

@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
     public User updateUser(User userFromDb, User user) {
         boolean isPasswordsMatches = passwordEncoder.matches(user.getPassword(), userFromDb.getPassword());
         if(user.getNewPassword() != null) {
-            if(isPasswordsMatches) {
+            if(isPasswordsMatches || user.getPasswordConfirm() == null) {
                 userFromDb.setPassword(passwordEncoder.encode(user.getPassword()));
             } else {
                 throw new IncorrectPasswordException();

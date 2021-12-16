@@ -7,7 +7,7 @@
             md="6"
         >
           <v-text-field
-              v-model="profile.firstName"
+              v-model="user.firstName"
               :rules="nameRules"
               :counter="15"
               label="Имя"
@@ -20,7 +20,7 @@
             md="6"
         >
           <v-text-field
-              v-model="profile.lastName"
+              v-model="user.lastName"
               :rules="nameRules"
               :counter="15"
               label="Фамилия"
@@ -36,7 +36,7 @@
             md="6"
         >
           <v-text-field
-              v-model="profile.phone"
+              v-model="user.phone"
               :rules="phoneRules"
               label="Номер телефона"
               placeholder="79XXXXXXXXX"
@@ -49,7 +49,7 @@
             md="6"
         >
           <v-dialog
-              v-model="dialog"
+              v-model="newPasswordDialog"
               persistent
               max-width="600px"
           >
@@ -71,35 +71,19 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field
-                          label="Текущий пароль"
-                          type="password"
-                          v-model="currentPassword"
-                          :rules="passwordRules"
-                          required
-                      ></v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
                           label="Новый пароль"
                           type="password"
                           v-model="newPassword"
-                          :rules="passwordRules.concat(passwordConfirmationCheck)"
+                          :rules="passwordRules"
                           required
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
-                      <v-text-field
-                          label="Подтверждение пароля"
-                          type="password"
-                          v-model="newPasswordConfirm"
-                          :rules="passwordRules.concat(passwordConfirmationCheck)"
-                          required
-                      ></v-text-field>
-                    </v-col>
+
                   </v-row>
                 </v-container>
-                <small>* - Поля обязательные к заполнению</small>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -120,13 +104,97 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+            cols="12"
+            md="6"
+        >
+          Роли пользователя
+          <v-layout row wrap>
+            <v-flex
+                v-for="role in roles"
+                :key="role"
+            >
+              <v-checkbox
+                  type="checkbox"
+                  v-model="user.roles"
+                  :label="role"
+                  :value="role"
+              />
+            </v-flex>
+          </v-layout>
+        </v-col>
+        <v-col
+            cols="12"
+            md="6"
+        >
+          <v-dialog
+              v-model="newPasswordDialog"
+              persistent
+              max-width="600px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  color="secondary"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+              >
+                Сменить пароль
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Смена пароля</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                          label="Новый пароль"
+                          type="password"
+                          v-model="newPassword"
+                          :rules="passwordRules"
+                          required
+                      ></v-text-field>
+                    </v-col>
+
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="cancelChangePassword"
+                >
+                  Отмена
+                </v-btn>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="saveChangePassword"
+                >
+                  Сохранить
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
         </v-col>
       </v-row>
     </v-container>
     <v-btn
         title
         color="primary"
-        @click="updateProfile"
+        @click="updateUser"
     >
       Сохранить изменения
     </v-btn>
@@ -138,7 +206,7 @@
       >
         <v-card>
           <v-card-title class="text-h5">
-            Изменение данных профиля
+            {{ notificationTitle }}
           </v-card-title>
 
           <v-card-text>
@@ -152,9 +220,9 @@
             <v-btn
                 color="green darken-1"
                 text
-                @click="showProfile"
+                @click="closeNotificationDialog"
             >
-              Понятно, сейчас сделаем
+              Ok
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -162,6 +230,7 @@
     </v-row>
 
   </v-form>
+
 </template>
 
 <script>
@@ -169,22 +238,15 @@ import {mapState} from "vuex"
 import {mapActions} from "vuex"
 
 export default {
-  name: 'ProfileEdit',
-  computed: {
-    passwordConfirmationCheck() {
-      return this.newPassword === this.newPasswordConfirm || 'Пароли не совпадают'
-    },
-    ...mapState(['profile']),
-  },
+  name: 'UserEdit',
   data: () => ({
+    newPassword:'',
+    newPasswordDialog: false,
     notificationDialog: false,
-    dialog: false,
-    valid: false,
-    errors: false,
+    notificationTitle:'',
     notificationMessage: '',
-    currentPassword:'',
-    newPassword: '',
-    newPasswordConfirm: '',
+    valid: false,
+    user: [],
     nameRules: [
       v => !!v || 'Поле не может быть пустым',
       v => v.length <= 15 || 'Некорректно введенное имя',
@@ -197,63 +259,49 @@ export default {
       v => !!v || 'Поле не может быть пустым',
       v => v.length >=8 || 'Пароль слишком короткий',
     ],
-    roles:[],
   }),
-  mounted() {
-    console.log(this);
+  computed: {
+    ...mapState(['users', 'roles']),
+  },
+  beforeMount() {
+    this.user = this.users.find(u => u.id === this.$route.params.id)
+    this.roles = this.user.roles
+    console.log('beforeMount')
+    console.log(this.roles)
   },
   methods: {
     ...mapActions(['updateUserAction']),
-
-    updateProfile() {
-      this.validate()
-      if(this.valid) {
-        this.updateUserAction(this.profile)
-        this.notificationDialog = true
-      }
-    },
-
-    saveChangePassword() {
-      this.validate()
-      if (this.valid) {
-
-        this.profile.password = this.currentPassword
-        this.profile.newPassword = this.newPassword
-
-        this.dialog = false
-        let errorFlag = false
-
-        this.updateUserAction(this.profile).catch(e => {
-          this.dialog = false
-          this.notificationMessage = 'Введенный текущий пароль некорректный. Пожалуйста, повторите попытку'
-          this.notificationDialog = true
-
-          errorFlag = true
-        })
-
-        if(!errorFlag) {
-          this.notificationMessage = 'Внимание! Для вступления изменений в силу необходимо выйти и зайти в приложение'
-          this.notificationDialog = true
-        }
-
-      }
-    },
-    cancelChangePassword() {
-      this.currentPassword = ''
-      this.newPassword = ''
-      this.newPasswordConfirm = ''
-      this.dialog = false
-    },
     validate() {
       this.valid = this.$refs.form.validate()
     },
-    showProfile() {
+    updateUser() {
+      console.log(this.user)
+    },
+    cancelChangePassword() {
+      this.newPassword = ''
+      this.newPasswordDialog = false
+    },
+    saveChangePassword() {
+      this.validate()
+      if (this.valid) {
+        this.user.newPassword = this.newPassword
+        this.newPasswordDialog = false
+        this.updateUserAction(this.user)
+
+        this.notificationTitle = 'Пароль пользователя был изменен'
+        this.notificationMessage = 'Для вступления изменений в силу пользователю необходимо перезайти в систему'
+        this.notificationDialog = true
+
+      }
+    },
+    closeNotificationDialog() {
       this.notificationDialog = false
-      this.$router.push('/profile')
+      this.notificationMessage = ''
+      this.notificationTitle=''
     }
   }
-}
 
+}
 </script>
 
 <style>
