@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table
-@ToString(of = {"id", "name", "groupId", "price"})
+@ToString(of = {"id", "name", "group", "price"})
 @EqualsAndHashCode(of = {"id"})
 public class Nomenclature {
     @Id

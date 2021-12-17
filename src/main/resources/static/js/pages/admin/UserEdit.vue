@@ -131,63 +131,22 @@
             cols="12"
             md="6"
         >
-          <v-dialog
-              v-model="newPasswordDialog"
-              persistent
-              max-width="600px"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                  color="secondary"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-              >
-                Сменить пароль
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="text-h5">Смена пароля</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                    </v-col>
-                    <v-col cols="12">
-                      <v-text-field
-                          label="Новый пароль"
-                          type="password"
-                          v-model="newPassword"
-                          :rules="passwordRules"
-                          required
-                      ></v-text-field>
-                    </v-col>
-
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="cancelChangePassword"
-                >
-                  Отмена
-                </v-btn>
-                <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="saveChangePassword"
-                >
-                  Сохранить
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-
+          Признак активности
+          <v-layout row wrap>
+            <v-radio-group
+                v-model="user.active"
+                row
+            >
+              <v-radio
+                  label="Активен"
+                  :value="true"
+              ></v-radio>
+              <v-radio
+                  label="Не активен"
+                  :value="false"
+              ></v-radio>
+            </v-radio-group>
+          </v-layout>
         </v-col>
       </v-row>
     </v-container>
@@ -265,9 +224,9 @@ export default {
   },
   beforeMount() {
     this.user = this.users.find(u => u.id === this.$route.params.id)
-    this.roles = this.user.roles
     console.log('beforeMount')
-    console.log(this.roles)
+    console.log('isActive = ', this.user.active)
+    this.isActive = this.user.active
   },
   methods: {
     ...mapActions(['updateUserAction']),
@@ -275,7 +234,11 @@ export default {
       this.valid = this.$refs.form.validate()
     },
     updateUser() {
-      console.log(this.user)
+      this.validate()
+      if(this.valid) {
+        this.updateUserAction(this.user)
+        this.showUserListPage()
+      }
     },
     cancelChangePassword() {
       this.newPassword = ''
@@ -298,6 +261,10 @@ export default {
       this.notificationDialog = false
       this.notificationMessage = ''
       this.notificationTitle=''
+    },
+
+    showUserListPage() {
+      this.$router.push('/adm/users')
     }
   }
 

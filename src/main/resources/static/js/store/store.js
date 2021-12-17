@@ -3,6 +3,7 @@ import 'es6-promise/auto' //to support old browsers
 import Vuex from 'vuex'
 import nomenclatureApi from "../api/nomList";
 import userApi from "../api/user";
+import posTypeApi from "../api/posType"
 
 Vue.use(Vuex)
 
@@ -10,14 +11,16 @@ export default new Vuex.Store({
     state: {
         nomList: frontendData.nomList,
         profile: frontendData.profile,
-        users: [],
         roles: frontendData.roles,
+        users: [],
+        posTypes:[],
     },
     getters: {
         sortedNomList: state => {
             return (state.nomList || []).sort((a, b) => -(a.id - b.id))
         }
     },
+
     mutations: {
         addNomenclatureMutation(state, nomenclature) {
             state.nomList = [
@@ -43,13 +46,27 @@ export default new Vuex.Store({
             }
         },
         updateProfileMutation(state, user) {
-            console.log('updateProfileMutation...')
             state.profile = null
             state.profile = user
-            console.log(state.profile)
         },
+
         getAllUsersMutation(state, list) {
             state.users = list
+        },
+
+        updateUserMutation(state, user) {
+            const index = state.users.findIndex(item => item.id === user.id)
+            if(index >-1) {
+                state.users = [
+                    ...state.users.slice(0, index),
+                    user,
+                    ...state.users.slice(index +1)
+                ]
+            }
+        },
+
+        getAllPOSTypesMutation(state, list) {
+            state.posTypes = list
         }
     },
     actions: {
@@ -74,7 +91,7 @@ export default new Vuex.Store({
                 commit('removeNomenclatureMutation', nomenclature)
             }
         },
-        async updateUserAction({commit}, user) {
+        async updateProfileAction({commit}, user) {
             let result
             try{
                 result = await userApi.update(user)
@@ -89,6 +106,16 @@ export default new Vuex.Store({
             const result = await userApi.get()
             const data = await result.json()
             commit('getAllUsersMutation',data)
+        },
+        async updateUserAction({commit}, user) {
+            const result = await userApi.update(user)
+            const data = await result.json()
+            commit('updateUserMutation', data)
+        },
+        async getAllPOSTypesActions({commit}) {
+            const result = await posTypeApi.get()
+            const data = await result.json()
+            commit('getAllPOSTypesMutation',data)
         }
     }
 })

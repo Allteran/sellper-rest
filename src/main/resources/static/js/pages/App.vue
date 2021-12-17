@@ -29,10 +29,10 @@
         Товары
       </v-btn>
       <v-btn text
-             @click="showUserListPage"
+             @click="showAdminPanel"
              v-if="isAdmin"
       >
-        Пользователи
+        Управление
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -77,9 +77,10 @@ export default {
     showProfilePage() {
       this.$router.push('/profile')
     },
-    showUserListPage() {
+
+    showAdminPanel(){
       if(this.isAdmin) {
-        this.$router.push('/adm/users')
+        this.$router.push('/adm')
       }else {
         this.$router.push('/404')
       }

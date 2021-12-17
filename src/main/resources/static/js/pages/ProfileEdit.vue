@@ -203,12 +203,12 @@ export default {
     console.log(this);
   },
   methods: {
-    ...mapActions(['updateUserAction']),
+    ...mapActions(['updateProfileAction']),
 
     updateProfile() {
       this.validate()
       if(this.valid) {
-        this.updateUserAction(this.profile)
+        this.updateProfileAction(this.profile)
         this.notificationDialog = true
       }
     },
@@ -223,10 +223,11 @@ export default {
         this.dialog = false
         let errorFlag = false
 
-        this.updateUserAction(this.profile).catch(e => {
+        this.updateProfileAction(this.profile).catch(e => {
           this.dialog = false
           this.notificationMessage = 'Введенный текущий пароль некорректный. Пожалуйста, повторите попытку'
           this.notificationDialog = true
+          console.log(e)
 
           errorFlag = true
         })

@@ -12,14 +12,14 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping()
-    public List<User> getUsers() {
-        return userService.findAll();
-    }
-
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping()
+    public List<User> getUsers() {
+        return userService.findAll();
     }
 
     @GetMapping("{id}")
