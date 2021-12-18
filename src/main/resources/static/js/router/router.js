@@ -18,7 +18,7 @@ const routes = [
     {path: '/adm', component: AdminPanel},
     {path:'/adm/users', component: UserList},
     {path:'/adm/user/:id', name: 'user-edit', component: UserEdit},
-    {path: '/adm/pos-types', name: POSTypeList},
+    {path: '/adm/pos-types', component: POSTypeList},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}
 ]

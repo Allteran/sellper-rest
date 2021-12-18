@@ -32,6 +32,17 @@ public class POSTypeController {
         return typeService.create(type);
     }
 
+    @PutMapping("{id}")
+    public POSType updateOne(
+            @PathVariable("id") POSType typeFromDb,
+            @RequestBody POSType type) {
+        return typeService.update(typeFromDb, type);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteOne(@PathVariable("id") POSType type) {
+        typeService.delete(type);
+    }
 
 
 }

@@ -67,6 +67,34 @@ export default new Vuex.Store({
 
         getAllPOSTypesMutation(state, list) {
             state.posTypes = list
+        },
+
+        addPOSTypeMutation(state, type) {
+            state.posTypes = [
+                ...state.posTypes,
+                type
+            ]
+        },
+
+        updatePOSTypeMutation(state, type) {
+            const index = state.posTypes.findIndex(item => item.id === type.id)
+            if(index>-1) {
+                state.posTypes = [
+                    ...state.posTypes.slice(0, index),
+                    type,
+                    ...state.posTypes.slice(index+1)
+                ]
+            }
+        },
+
+        removePOSMutation(state, type) {
+            const index = state.posTypes.findIndex(item => item.id === type.id)
+            if(index > -1) {
+                state.posTypes = [
+                    ...state.posTypes.slice(0, index),
+                    ...state.posTypes.slice(index + 1)
+                ]
+            }
         }
     },
     actions: {
@@ -116,6 +144,29 @@ export default new Vuex.Store({
             const result = await posTypeApi.get()
             const data = await result.json()
             commit('getAllPOSTypesMutation',data)
+        },
+        async addPOSTypeAction({commit}, type) {
+            const result = await posTypeApi.add(type)
+            const data = result.json()
+            const index = this.state.posTypes.findIndex(item => item.id === data.id)
+            if (index > -1) {
+                commit('updatePOSTypeMutation', type)
+            } else {
+                commit('addPOSTypeMutation', type)
+            }
+        },
+        async updatePOSTypeAction({commit}, type) {
+            const result = await posTypeApi.update(type)
+            const data = await result.json()
+            commit('updatePOSTypeMutation', data)
+        },
+        async removePOSTypeAction({commit}, type) {
+            const result = await posTypeApi.remove(type.id)
+            const data = await result.json()
+            if(result.ok) {
+                commit('removePOSMutation', data)
+            }
         }
+
     }
 })
