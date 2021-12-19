@@ -20,4 +20,16 @@ public class POSService {
         return posRepo.findAll();
     }
 
+    public PointOfSales create(PointOfSales pos) {
+        return posRepo.save(pos);
+    }
+
+    public PointOfSales update(PointOfSales posFromDb, PointOfSales pos) {
+        return posRepo.save(pos);
+    }
+
+    public void remove(PointOfSales pos) {
+        posRepo.delete(pos);
+    }
+
 }

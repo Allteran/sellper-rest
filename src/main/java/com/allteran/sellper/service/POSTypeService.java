@@ -20,10 +20,6 @@ public class POSTypeService {
        return typeRepo.findAll();
     }
 
-    public POSType addType(POSType type) {
-        return typeRepo.save(type);
-    }
-
     public POSType create(POSType type) {
         return typeRepo.save(type);
     }

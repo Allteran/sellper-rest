@@ -2,6 +2,7 @@ package com.allteran.sellper.controller;
 
 import com.allteran.sellper.domain.POSType;
 import com.allteran.sellper.service.POSTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class POSTypeController {
 
     private final POSTypeService typeService;
 
-
+    @Autowired
     public POSTypeController(POSTypeService typeService) {
         this.typeService = typeService;
     }

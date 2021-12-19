@@ -8,6 +8,7 @@ import UserList from 'pages/admin/UserList.vue'
 import UserEdit from 'pages/admin/UserEdit.vue'
 import AdminPanel from 'pages/admin/AdminPanel.vue'
 import POSTypeList from 'pages/admin/POSTypeList.vue'
+import POSList from 'pages/admin/POSList.vue'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,7 @@ const routes = [
     {path:'/adm/users', component: UserList},
     {path:'/adm/user/:id', name: 'user-edit', component: UserEdit},
     {path: '/adm/pos-types', component: POSTypeList},
+    {path: '/adm/pos', component: POSList},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}
 ]

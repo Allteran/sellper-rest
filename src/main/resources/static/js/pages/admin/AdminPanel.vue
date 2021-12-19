@@ -26,6 +26,7 @@
         >
         <v-card
             class="mx-auto"
+            @click="showPosManagePage"
           >
           <v-card-text>
             <p class="text-h5 text--primary">
@@ -90,7 +91,11 @@ export default {
     },
 
     showPosManagePage() {
-
+      if(this.isAdmin) {
+        this.$router.push('/adm/pos')
+      }else {
+        this.$router.push('/404')
+      }
     },
 
     showPosTypeManagePage() {
