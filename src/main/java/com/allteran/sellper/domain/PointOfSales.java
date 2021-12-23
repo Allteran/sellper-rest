@@ -1,5 +1,8 @@
 package com.allteran.sellper.domain;
 
+import com.allteran.sellper.util.POSTypeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +14,8 @@ public class PointOfSales {
     private String street;
     private String building;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonDeserialize(using = POSTypeDeserializer.class)
     @JoinColumn(name = "type_id")
     private POSType type;
 

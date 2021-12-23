@@ -10,6 +10,15 @@ public class POSType {
     private long id;
     private String name;
 
+
+    public POSType() {
+    }
+
+    public POSType(String id, String name) {
+        this.id = Long.parseLong(id);
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

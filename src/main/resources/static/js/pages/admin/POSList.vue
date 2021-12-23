@@ -156,7 +156,7 @@ export default {
       {text: 'Город', value: 'city'},
       {text: 'Улица', value: 'street'},
       {text: 'Дом', value: 'building'},
-      {text: 'Ритейл', value: 'type'},
+      {text: 'Ритейл', value: 'type.name'},
       {text: 'Действия', value: 'actions', sortable: false},
     ],
     dialog: false,
@@ -167,14 +167,14 @@ export default {
       city:'',
       street:'',
       building:'',
-      type: ''
+      type: {},
     },
     defaultItem: {
       id: '',
       city:'',
       street:'',
       building:'',
-      type: ''
+      type: {}
     },
     selectedType: {
       name: 'Мегафон',
@@ -235,6 +235,7 @@ export default {
     save() {
       this.validate()
       if(this.valid) {
+        this.editedItem.type = this.selectedType
         if (this.editedItem.id) {
           this.updatePOSAction(this.editedItem)
         } else {
