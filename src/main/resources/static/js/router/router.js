@@ -9,6 +9,8 @@ import UserEdit from 'pages/admin/UserEdit.vue'
 import AdminPanel from 'pages/admin/AdminPanel.vue'
 import POSTypeList from 'pages/admin/POSTypeList.vue'
 import POSList from 'pages/admin/POSList.vue'
+import DeviceType from 'pages/admin/DeviceType.vue'
+import RepairStatus from 'pages/admin/RepairStatus.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +23,8 @@ const routes = [
     {path:'/adm/user/:id', name: 'user-edit', component: UserEdit},
     {path: '/adm/pos-types', component: POSTypeList},
     {path: '/adm/pos', component: POSList},
+    {path: '/adm/repair/device-type', component: DeviceType},
+    {path: '/adm/repair/status', component: RepairStatus},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}
 ]

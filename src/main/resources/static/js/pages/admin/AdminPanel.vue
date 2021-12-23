@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-flex class="mt-4 mb-4">
+      <h3>Управление рабочим окружением</h3>
+    </v-flex>
     <v-row>
       <v-col
           :cols="6"
@@ -58,6 +61,48 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-flex class="mt-4 mb-4">
+      <h3>Управление номенклатурой ремонта</h3>
+    </v-flex>
+    <v-row>
+      <v-col
+          :cols="6"
+          sm="4"
+      >
+        <v-card
+            class="mx-auto"
+            @click="showDeviceTypePage"
+        >
+          <v-card-text>
+            <p class="text-h5 text--primary">
+              Типы ремонтируемых устройств
+            </p>
+            <div class="text--primary">
+              Список всех типов устройств, которые принимаются в ремонт
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col
+          :cols="6"
+          sm="4"
+      >
+        <v-card
+            class="mx-auto"
+            @click="showRepairStatusPage"
+        >
+          <v-card-text>
+            <p class="text-h5 text--primary">
+              Статусы ремонта
+            </p>
+            <div class="text--primary">
+              Список доступных статусов ремонта
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
 
   </v-container>
 </template>
@@ -101,6 +146,21 @@ export default {
     showPosTypeManagePage() {
       if(this.isAdmin) {
         this.$router.push('/adm/pos-types')
+      }else {
+        this.$router.push('/404')
+      }
+    },
+    showDeviceTypePage() {
+      if(this.isAdmin) {
+        this.$router.push('/adm/repair/device-type')
+      }else {
+        this.$router.push('/404')
+      }
+    },
+
+    showRepairStatusPage() {
+      if(this.isAdmin) {
+        this.$router.push('/adm/repair/status')
       }else {
         this.$router.push('/404')
       }

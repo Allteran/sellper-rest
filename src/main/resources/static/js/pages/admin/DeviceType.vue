@@ -2,7 +2,7 @@
 
   <v-data-table
       :headers="headers"
-      :items="posTypes"
+      :items="deviceTypeList"
       :items-per-page="15"
       class="elevation-1"
   >
@@ -92,7 +92,7 @@
 import {mapActions, mapState} from 'vuex'
 
 export default {
-  name: 'POSTypeList',
+  name: 'DeviceType',
   data: () => ({
     headers: [
       {text: 'ID', align: 'start', sortable: false, value: 'id'},
@@ -112,7 +112,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(['profile', 'posTypes']),
+    ...mapState(['profile', 'deviceTypeList']),
     formTitle() {
       return this.editedIndex === -1 ? 'Создание' : 'Редактирование'
     },
@@ -120,7 +120,7 @@ export default {
   beforeMount() {
     for(let i = 0; i<this.profile.roles.length; i++) {
       if (this.profile.roles[i] === 'ADMIN') {
-        this.getAllPOSTypesActions()
+        this.getAllDeviceTypeAction()
         return
       }
     }
@@ -132,10 +132,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getAllPOSTypesActions', 'addPOSTypeAction', 'updatePOSTypeAction']),
+    ...mapActions(['getAllDeviceTypeAction', 'addDeviceTypeAction', 'updateDeviceTypeAction']),
 
     editItem(item) {
-      this.editedIndex = this.posTypes.indexOf(item)
+      this.editedIndex = this.deviceTypeList.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
@@ -150,9 +150,9 @@ export default {
 
     save() {
       if (this.editedItem.id) {
-        this.updatePOSTypeAction(this.editedItem)
+        this.updateDeviceTypeAction(this.editedItem)
       } else {
-        this.addPOSTypeAction(this.editedItem)
+        this.addDeviceTypeAction(this.editedItem)
       }
       this.close()
     },

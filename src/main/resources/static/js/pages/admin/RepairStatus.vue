@@ -2,7 +2,7 @@
 
   <v-data-table
       :headers="headers"
-      :items="posTypes"
+      :items="repairStatusList"
       :items-per-page="15"
       class="elevation-1"
   >
@@ -92,7 +92,7 @@
 import {mapActions, mapState} from 'vuex'
 
 export default {
-  name: 'POSTypeList',
+  name: 'RepairStatus',
   data: () => ({
     headers: [
       {text: 'ID', align: 'start', sortable: false, value: 'id'},
@@ -100,7 +100,7 @@ export default {
       {text: 'Действия', value: 'actions', sortable: false},
     ],
     dialog: false,
-    valid: true,
+    valid: true, //TODO: implement validation of field 'name'
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -112,7 +112,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(['profile', 'posTypes']),
+    ...mapState(['profile', 'repairStatusList']),
     formTitle() {
       return this.editedIndex === -1 ? 'Создание' : 'Редактирование'
     },
@@ -120,7 +120,7 @@ export default {
   beforeMount() {
     for(let i = 0; i<this.profile.roles.length; i++) {
       if (this.profile.roles[i] === 'ADMIN') {
-        this.getAllPOSTypesActions()
+        this.getAllRepairStatusAction()
         return
       }
     }
@@ -132,10 +132,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getAllPOSTypesActions', 'addPOSTypeAction', 'updatePOSTypeAction']),
+    ...mapActions(['getAllRepairStatusAction', 'addRepairStatusAction', 'updateRepairStatusAction']),
 
     editItem(item) {
-      this.editedIndex = this.posTypes.indexOf(item)
+      this.editedIndex = this.repairStatusList.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
@@ -150,9 +150,9 @@ export default {
 
     save() {
       if (this.editedItem.id) {
-        this.updatePOSTypeAction(this.editedItem)
+        this.updateRepairStatusAction(this.editedItem)
       } else {
-        this.addPOSTypeAction(this.editedItem)
+        this.addRepairStatusAction(this.editedItem)
       }
       this.close()
     },

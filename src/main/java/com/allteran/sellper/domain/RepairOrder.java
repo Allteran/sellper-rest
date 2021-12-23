@@ -11,8 +11,10 @@ public class RepairOrder {
     private Long id;
     private String deviceName;
 
-    @CollectionTable(name="device_type", joinColumns = @JoinColumn(name="order_id"))
-    private DeviceType deviceType;
+    @ManyToOne
+    @JoinColumn(name = "device_type_id")
+    private RepairDeviceType deviceType;
+
     private String serialNumber;
     private String defect;
     private String equipSet;
@@ -74,11 +76,11 @@ public class RepairOrder {
         this.deviceName = deviceName;
     }
 
-    public DeviceType getDeviceType() {
+    public RepairDeviceType getDeviceType() {
         return deviceType;
     }
 
-    public void setDeviceType(DeviceType deviceType) {
+    public void setDeviceType(RepairDeviceType deviceType) {
         this.deviceType = deviceType;
     }
 

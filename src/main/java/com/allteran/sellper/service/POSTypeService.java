@@ -4,6 +4,7 @@ import com.allteran.sellper.domain.Nomenclature;
 import com.allteran.sellper.domain.POSType;
 import com.allteran.sellper.repo.POSTypeRepo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class POSTypeService {
     private final POSTypeRepo typeRepo;
 
+    @Autowired
     public POSTypeService(POSTypeRepo typeRepo) {
         this.typeRepo = typeRepo;
     }
