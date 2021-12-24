@@ -11,20 +11,22 @@ import POSTypeList from 'pages/admin/POSTypeList.vue'
 import POSList from 'pages/admin/POSList.vue'
 import DeviceType from 'pages/admin/DeviceType.vue'
 import RepairStatus from 'pages/admin/RepairStatus.vue'
+import RepairOrderList from 'pages/repair/RepairOrderList.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
     {path: '/', component: NomList},
     {path: '/profile', component: Profile},
-    {path:'/profileEdit', component: ProfileEdit},
+    {path: '/profileEdit', component: ProfileEdit},
     {path: '/adm', component: AdminPanel},
-    {path:'/adm/users', component: UserList},
-    {path:'/adm/user/:id', name: 'user-edit', component: UserEdit},
+    {path: '/adm/users', component: UserList},
+    {path: '/adm/user/:id', name: 'user-edit', component: UserEdit},
     {path: '/adm/pos-types', component: POSTypeList},
     {path: '/adm/pos', component: POSList},
     {path: '/adm/repair/device-type', component: DeviceType},
     {path: '/adm/repair/status', component: RepairStatus},
+    {path: '/repair/order', component: RepairOrderList},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}
 ]

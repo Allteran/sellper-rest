@@ -30,14 +30,14 @@ export default {
   beforeMount() {
     for(let i = 0; i<this.profile.roles.length; i++) {
       if (this.profile.roles[i] === 'ADMIN') {
-        this.getAllUsersAction()
+        this.getUserListAction()
         return
       }
     }
     this.$router.push('/404')
   },
   methods: {
-    ...mapActions(['getAllUsersAction']),
+    ...mapActions(['getUserListAction']),
     clickRow(item) {
       console.log('clicked on row with user')
       console.log('user.id = ', item.id)

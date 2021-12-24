@@ -15,6 +15,7 @@
         Выполнение KPI
       </v-btn>
       <v-btn text
+             @click="showRepairOrderPage"
       >
         Ремонт
       </v-btn>
@@ -84,6 +85,9 @@ export default {
       }else {
         this.$router.push('/404')
       }
+    },
+    showRepairOrderPage() {
+      this.$router.push('/repair/order')
     }
   }
 }

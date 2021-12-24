@@ -197,8 +197,8 @@ export default {
   beforeMount() {
     for(let i = 0; i<this.profile.roles.length; i++) {
       if (this.profile.roles[i] === 'ADMIN') {
-        this.getAllPOSAction()
-        this.getAllPOSTypesActions()
+        this.getPOSListAction()
+        this.getPOSTypeListAction()
         return
       }
     }
@@ -210,7 +210,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getAllPOSAction', 'addPOSAction', 'updatePOSAction', 'getAllPOSTypesActions']),
+    ...mapActions(['getPOSListAction', 'addPOSAction', 'updatePOSAction', 'getPOSTypeListAction']),
 
     clickRow(item) {
       // this.$router.push({name: 'user-edit', params: {id: item.id}})

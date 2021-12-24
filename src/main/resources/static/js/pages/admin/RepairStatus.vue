@@ -10,7 +10,7 @@
       <v-toolbar
           flat
       >
-        <v-toolbar-title>Типы торговых точек</v-toolbar-title>
+        <v-toolbar-title>Статусы ремонта устройств</v-toolbar-title>
         <v-divider
             class="mx-4"
             inset
@@ -48,6 +48,7 @@
                     <v-text-field
                         v-model="editedItem.name"
                         label="Наименование"
+                        :rules="nameRules"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -99,8 +100,10 @@ export default {
       {text: 'Название', value: 'name'},
       {text: 'Действия', value: 'actions', sortable: false},
     ],
+    nameRules: [
+      v => !!v || 'Поле не может быть пустым',
+    ],
     dialog: false,
-    valid: true, //TODO: implement validation of field 'name'
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -120,7 +123,7 @@ export default {
   beforeMount() {
     for(let i = 0; i<this.profile.roles.length; i++) {
       if (this.profile.roles[i] === 'ADMIN') {
-        this.getAllRepairStatusAction()
+        this.getRepairStatusListAction()
         return
       }
     }
@@ -132,7 +135,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getAllRepairStatusAction', 'addRepairStatusAction', 'updateRepairStatusAction']),
+    ...mapActions(['getRepairStatusListAction', 'addRepairStatusAction', 'updateRepairStatusAction']),
 
     editItem(item) {
       this.editedIndex = this.repairStatusList.indexOf(item)

@@ -48,6 +48,7 @@
                     <v-text-field
                         v-model="editedItem.name"
                         label="Наименование"
+                        :rules="nameRules"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -99,8 +100,10 @@ export default {
       {text: 'Название', value: 'name'},
       {text: 'Действия', value: 'actions', sortable: false},
     ],
+    nameRules: [
+      v => !!v || 'Поле не может быть пустым',
+    ],
     dialog: false,
-    valid: true,
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -120,7 +123,7 @@ export default {
   beforeMount() {
     for(let i = 0; i<this.profile.roles.length; i++) {
       if (this.profile.roles[i] === 'ADMIN') {
-        this.getAllPOSTypesActions()
+        this.getPOSTypeListAction()
         return
       }
     }
@@ -132,7 +135,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getAllPOSTypesActions', 'addPOSTypeAction', 'updatePOSTypeAction']),
+    ...mapActions(['getPOSTypeListAction', 'addPOSTypeAction', 'updatePOSTypeAction']),
 
     editItem(item) {
       this.editedIndex = this.posTypes.indexOf(item)

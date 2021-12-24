@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public User updateProfile(
+    public User update(
             @PathVariable("id") User userFromDb,
             @RequestBody User user) {
         return userService.updateUser(userFromDb, user);

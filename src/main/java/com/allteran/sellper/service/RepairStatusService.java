@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class RepairStatusService {
@@ -32,5 +34,10 @@ public class RepairStatusService {
 
     public void delete(RepairStatus status) {
         statusRepo.delete(status);
+    }
+
+    public RepairStatus findById(Long id) throws NoSuchElementException {
+        Optional<RepairStatus> optionalStatus = statusRepo.findById(id);
+        return optionalStatus.get();
     }
 }

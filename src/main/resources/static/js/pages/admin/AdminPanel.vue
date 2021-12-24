@@ -134,7 +134,6 @@ export default {
         this.$router.push('/404')
       }
     },
-
     showPosManagePage() {
       if(this.isAdmin) {
         this.$router.push('/adm/pos')
@@ -142,7 +141,6 @@ export default {
         this.$router.push('/404')
       }
     },
-
     showPosTypeManagePage() {
       if(this.isAdmin) {
         this.$router.push('/adm/pos-types')
@@ -157,7 +155,6 @@ export default {
         this.$router.push('/404')
       }
     },
-
     showRepairStatusPage() {
       if(this.isAdmin) {
         this.$router.push('/adm/repair/status')

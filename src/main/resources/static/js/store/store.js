@@ -7,6 +7,7 @@ import posTypeApi from "../api/posType"
 import posApi from '../api/pointOfSales'
 import deviceTypeApi from '../api/repairDeviceType'
 import repairStatusApi from '../api/repairStatus'
+import repairOrderApi from '../api/repairOrder'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         posList:[],
         deviceTypeList:[],
         repairStatusList:[],
+        repairOrderList:[],
     },
     getters: {
         sortedNomList: state => {
@@ -63,7 +65,7 @@ export default new Vuex.Store({
         /**
          * Module for User (via admin page)
          */
-        getAllUsersMutation(state, list) {
+        getUserListMutation(state, list) {
             state.users = list
         },
         updateUserMutation(state, user) {
@@ -80,7 +82,7 @@ export default new Vuex.Store({
         /**
          * Module for POSType entity
          */
-        getAllPOSTypesMutation(state, list) {
+        getPOSTypeListMutation(state, list) {
             state.posTypes = list
         },
         addPOSTypeMutation(state, type) {
@@ -112,7 +114,7 @@ export default new Vuex.Store({
         /**
          * Module for PointOfSales entity
          */
-        getAllPOSMutation(state, list) {
+        getPOSListMutation(state, list) {
             state.posList = list
         },
         addPOSMutation(state, pos) {
@@ -144,7 +146,7 @@ export default new Vuex.Store({
         /**
          * Module for RepairDeviceType entity
          */
-        getAllDeviceTypeMutation(state, list) {
+        getDeviceTypeListMutation(state, list) {
             state.deviceTypeList = list
         },
         addDeviceTypeMutation(state, type) {
@@ -176,7 +178,7 @@ export default new Vuex.Store({
         /**
          * Module for RepairStatus entity
          */
-        getAllRepairStatusMutation(state, list) {
+        getRepairStatusListMutation(state, list) {
             state.repairStatusList = list
         },
         addRepairStatusMutation(state, status) {
@@ -201,6 +203,38 @@ export default new Vuex.Store({
                 state.repairStatusList = [
                     ...state.repairStatusList.slice(0, index),
                     ...state.repairStatusList.slice(index + 1)
+                ]
+            }
+        },
+
+        /**
+         * Module for RepairOrder entity
+         */
+        getRepairOrderListMutation(state, list) {
+            state.repairOrderList = list
+        },
+        addRepairOrderMutation(state, order) {
+            state.repairOrderList = [
+                ...state.repairOrderList,
+                order
+            ]
+        },
+        updateRepairOrderMutation(state, order) {
+            const index = state.repairOrderList.findIndex(item => item.id === order.id)
+            if(index>-1) {
+                state.repairOrderList = [
+                    ...state.repairOrderList.slice(0, index),
+                    order,
+                    ...state.repairOrderList.slice(index+1)
+                ]
+            }
+        },
+        removeRepairOrderMutation(state, order) {
+            const index = state.repairOrderList.findIndex(item => item.id === order.id)
+            if(index > -1) {
+                state.repairOrderList = [
+                    ...state.repairOrderList.slice(0, index),
+                    ...state.repairOrderList.slice(index + 1)
                 ]
             }
         }
@@ -246,10 +280,10 @@ export default new Vuex.Store({
         /**
          * Module for User (via admin page)
          */
-        async getAllUsersAction({commit}) {
+        async getUserListAction({commit}) {
             const result = await userApi.get()
             const data = await result.json()
-            commit('getAllUsersMutation',data)
+            commit('getUserListMutation',data)
         },
         async updateUserAction({commit}, user) {
             const result = await userApi.update(user)
@@ -260,10 +294,10 @@ export default new Vuex.Store({
         /**
          * Module for POSType entity
          */
-        async getAllPOSTypesActions({commit}) {
+        async getPOSTypeListAction({commit}) {
             const result = await posTypeApi.get()
             const data = await result.json()
-            commit('getAllPOSTypesMutation',data)
+            commit('getPOSTypeListMutation',data)
         },
         async addPOSTypeAction({commit}, type) {
             const result = await posTypeApi.add(type)
@@ -290,10 +324,10 @@ export default new Vuex.Store({
         /**
          * Module for PointOfSales entity
          */
-        async getAllPOSAction({commit}) {
+        async getPOSListAction({commit}) {
             const result = await posApi.get()
             const data = await result.json()
-            commit('getAllPOSMutation',data)
+            commit('getPOSListMutation',data)
         },
         async addPOSAction({commit}, pos) {
             const result = await posApi.add(pos)
@@ -320,10 +354,10 @@ export default new Vuex.Store({
         /**
          * Module for RepairDeviceType entity
          */
-        async getAllDeviceTypeAction({commit}) {
+        async getDeviceTypeListAction({commit}) {
             const result = await deviceTypeApi.get()
             const data = await result.json()
-            commit('getAllDeviceTypeMutation',data)
+            commit('getDeviceTypeListMutation',data)
         },
         async addDeviceTypeAction({commit}, type) {
             const result = await deviceTypeApi.add(type)
@@ -342,7 +376,6 @@ export default new Vuex.Store({
         },
         async removeDeviceTypeAction({commit}, type) {
             const result = await deviceTypeApi.remove(type.id)
-            const data = await result.json()
             if(result.ok) {
                 commit('removeDeviceTypeMutation', type)
             }
@@ -351,10 +384,10 @@ export default new Vuex.Store({
         /**
          * Module for RepairStatus entity
          */
-        async getAllRepairStatusAction({commit}) {
+        async getRepairStatusListAction({commit}) {
             const result = await repairStatusApi.get()
             const data = await result.json()
-            commit('getAllRepairStatusMutation',data)
+            commit('getRepairStatusListMutation',data)
         },
         async addRepairStatusAction({commit}, status) {
             const result = await repairStatusApi.add(status)
@@ -374,7 +407,37 @@ export default new Vuex.Store({
         async removeRepairStatusAction({commit}, status) {
             const result = await repairStatusApi.remove(status.id)
             if(result.ok) {
-                commit('removeDeviceTypeMutation', status)
+                commit('removeRepairStatusMutation', status)
+            }
+        },
+
+        /**
+         * Module for RepairOrder entity
+         */
+        async getRepairOrderListAction({commit}) {
+            const result = await repairOrderApi.get()
+            const data = await result.json()
+            commit('getRepairOrderListMutation',data)
+        },
+        async addRepairOrderAction({commit}, order) {
+            const result = await repairOrderApi.add(order)
+            const data = result.json()
+            const index = this.state.repairOrderList.findIndex(item => item.id === data.id)
+            if (index > -1) {
+                commit('updateRepairOrderMutation', order)
+            } else {
+                commit('addRepairOrderMutation', order)
+            }
+        },
+        async updateRepairOrderAction({commit}, order) {
+            const result = await repairOrderApi.update(order)
+            const data = await result.json()
+            commit('updateRepairOrderMutation', data)
+        },
+        async removeRepairOrderAction({commit}, order) {
+            const result = await repairOrderApi.remove(order.id)
+            if(result.ok) {
+                commit('removeRepairOrderMutation', order)
             }
         },
     }

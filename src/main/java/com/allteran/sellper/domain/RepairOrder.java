@@ -33,6 +33,11 @@ public class RepairOrder {
     private int servicePrice;
     private int componentPrice;
     private int marginPrice;
+    private int totalPrice;
+
+    private double directorProfit;
+    private double repManProfit; //profint for repairman
+    private double managerProfit; //profit for administrate manager
 
     private String customerName;
     private String customerPhone;
@@ -206,5 +211,37 @@ public class RepairOrder {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public double getDirectorProfit() {
+        return directorProfit;
+    }
+
+    public void setDirectorProfit(double directorProfit) {
+        this.directorProfit = directorProfit;
+    }
+
+    public double getRepManProfit() {
+        return repManProfit;
+    }
+
+    public void setRepManProfit(double repManProfit) {
+        this.repManProfit = repManProfit;
+    }
+
+    public double getManagerProfit() {
+        return managerProfit;
+    }
+
+    public void setManagerProfit(double managerProfit) {
+        this.managerProfit = managerProfit;
     }
 }

@@ -47,6 +47,7 @@
                   >
                     <v-text-field
                         v-model="editedItem.name"
+                        :rules="nameRules"
                         label="Наименование"
                     ></v-text-field>
                   </v-col>
@@ -100,7 +101,9 @@ export default {
       {text: 'Действия', value: 'actions', sortable: false},
     ],
     dialog: false,
-    valid: true,
+    nameRules: [
+      v => !!v || 'Поле не может быть пустым',
+    ],
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -120,7 +123,7 @@ export default {
   beforeMount() {
     for(let i = 0; i<this.profile.roles.length; i++) {
       if (this.profile.roles[i] === 'ADMIN') {
-        this.getAllDeviceTypeAction()
+        this.getDeviceTypeListAction()
         return
       }
     }
@@ -132,7 +135,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getAllDeviceTypeAction', 'addDeviceTypeAction', 'updateDeviceTypeAction']),
+    ...mapActions(['getDeviceTypeListAction', 'addDeviceTypeAction', 'updateDeviceTypeAction']),
 
     editItem(item) {
       this.editedIndex = this.deviceTypeList.indexOf(item)
@@ -141,7 +144,6 @@ export default {
     },
 
     close() {
-      this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1
