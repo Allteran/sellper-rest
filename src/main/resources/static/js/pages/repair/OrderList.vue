@@ -1,5 +1,5 @@
 <template>
-
+  <v-main>
     <v-data-table
         :headers="headers"
         :items="repairOrderList"
@@ -20,16 +20,29 @@
         </v-toolbar>
       </template>
     </v-data-table>
+      <v-btn
+          class="mr-10 mb-10"
+          fab
+          color="accent"
+          fixed
+          bottom
+          right
+          large
+          @click="showCreateOrderPage()"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+  </v-main>
+
 </template>
 
 <script>
 import {mapActions, mapState} from 'vuex'
 
 export default {
-  name: 'RepairOrderList',
+  name: 'OrderList',
   data: () => ({
     headers: [
-      {text: 'ID', align: 'start', sortable: false, value: 'id'},
       {text: 'Устройство', value: 'deviceName'},
       {text: 'Дефект', value: 'defect'},
       {text: 'Дата приема', value: 'creationDate'},
@@ -49,6 +62,10 @@ export default {
 
     clickRow(item) {
       // this.$router.push({name: 'user-edit', params: {id: item.id}})
+    },
+
+    showCreateOrderPage() {
+
     },
 
   }

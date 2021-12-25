@@ -11,7 +11,7 @@ import POSTypeList from 'pages/admin/POSTypeList.vue'
 import POSList from 'pages/admin/POSList.vue'
 import DeviceType from 'pages/admin/DeviceType.vue'
 import RepairStatus from 'pages/admin/RepairStatus.vue'
-import RepairOrderList from 'pages/repair/RepairOrderList.vue'
+import OrderList from 'pages/repair/OrderList.vue'
 
 Vue.use(VueRouter)
 
@@ -26,7 +26,7 @@ const routes = [
     {path: '/adm/pos', component: POSList},
     {path: '/adm/repair/device-type', component: DeviceType},
     {path: '/adm/repair/status', component: RepairStatus},
-    {path: '/repair/order', component: RepairOrderList},
+    {path: '/repair/order', component: OrderList},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}
 ]
