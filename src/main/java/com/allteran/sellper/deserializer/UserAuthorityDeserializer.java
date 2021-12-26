@@ -1,4 +1,4 @@
-package com.allteran.sellper.util;
+package com.allteran.sellper.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -10,7 +10,7 @@
       <v-toolbar
           flat
       >
-        <v-toolbar-title>Типы торговых точек</v-toolbar-title>
+        <v-toolbar-title>Типы ремонтируемых устройств</v-toolbar-title>
         <v-divider
             class="mx-4"
             inset
@@ -47,8 +47,8 @@
                   >
                     <v-text-field
                         v-model="editedItem.name"
-                        :rules="nameRules"
                         label="Наименование"
+                        :rules="nameRules"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -100,10 +100,10 @@ export default {
       {text: 'Название', value: 'name'},
       {text: 'Действия', value: 'actions', sortable: false},
     ],
-    dialog: false,
     nameRules: [
       v => !!v || 'Поле не может быть пустым',
     ],
+    dialog: false,
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -144,6 +144,7 @@ export default {
     },
 
     close() {
+      this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
         this.editedIndex = -1

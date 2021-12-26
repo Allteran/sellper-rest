@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class RepairOrderService {
-    private static final Long STATUS_CREATED_ID = 12L; //ID for status 'принят'
+    private static final Long STATUS_CREATED_ID = 8L; //take care of this line when create new database
 
     private final RepairOrderRepo orderRepo;
     private final RepairStatusService statusService;
@@ -30,7 +30,7 @@ public class RepairOrderService {
 
     public RepairOrder createOrder(RepairOrder order) {
         order.setCreationDate(LocalDateTime.now());
-        order.setIssueDate(LocalDateTime.MIN);
+        order.setIssueDate(LocalDateTime.of(2000,1,1,1,1));
 
         RepairStatus statusCreated = statusService.findById(STATUS_CREATED_ID);
         order.setStatus(statusCreated);

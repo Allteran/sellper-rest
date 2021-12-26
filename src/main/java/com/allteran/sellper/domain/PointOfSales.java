@@ -1,6 +1,6 @@
 package com.allteran.sellper.domain;
 
-import com.allteran.sellper.util.POSTypeDeserializer;
+import com.allteran.sellper.deserializer.POSTypeDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;

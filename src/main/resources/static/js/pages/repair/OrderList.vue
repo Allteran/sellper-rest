@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <div>
     <v-data-table
         :headers="headers"
         :items="repairOrderList"
@@ -32,7 +32,7 @@
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
-  </v-main>
+  </div>
 
 </template>
 
@@ -47,7 +47,7 @@ export default {
       {text: 'Дефект', value: 'defect'},
       {text: 'Дата приема', value: 'creationDate'},
       {text: 'Дата выдачи', value: 'issueDate'},
-      {text: 'Статус', value: 'status.name'},
+      {text: 'Статус', value: 'status'},
       {text: 'Стоимость', value: 'totalPrice'},
       {text: 'Точка продаж', value: 'pos.street'},
       {text: 'Сотрудник', value: 'author.lastName'}
@@ -65,7 +65,7 @@ export default {
     },
 
     showCreateOrderPage() {
-
+      this.$router.push('/repair/order/new')
     },
 
   }

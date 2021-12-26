@@ -1,5 +1,7 @@
 package com.allteran.sellper.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -8,47 +10,47 @@ import java.time.LocalDateTime;
 public class RepairOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String deviceName;
+    private Long id; //*
+    private String deviceName; //*
 
     @ManyToOne
     @JoinColumn(name = "device_type_id")
-    private RepairDeviceType deviceType;
+    private RepairDeviceType deviceType; //*
 
-    private String serialNumber;
-    private String defect;
-    private String equipSet;
-    private String appearance;
-    private String warranty;
+    private String serialNumber; //*
+    private String defect; //*
+    private String equipSet; //*
+    private String appearance; //*
+    private String warranty; //*
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    private RepairStatus status;
-    private String performedActions;
+    private RepairStatus status; //*
+    private String performedActions; //*
 
-    private LocalDateTime creationDate;
-    private LocalDateTime issueDate;
+    private LocalDateTime creationDate; //*
+    private LocalDateTime issueDate; //*
 
-    private int preliminaryPrice;
-    private int servicePrice;
-    private int componentPrice;
-    private int marginPrice;
-    private int totalPrice;
+    private int preliminaryPrice; //*
+    private int servicePrice; //*
+    private int componentPrice; //*
+    private int marginPrice; //*
+    private int totalPrice; //*
 
-    private double directorProfit;
-    private double repManProfit; //profint for repairman
-    private double managerProfit; //profit for administrate manager
+    private double directorProfit; //*
+    private double repManProfit; //* profit for repairman
+    private double managerProfit; //* profit for administrate manager
 
-    private String customerName;
-    private String customerPhone;
+    private String customerName; //*
+    private String customerPhone; //*
 
     @ManyToOne
     @JoinColumn(name = "pos_id")
-    private PointOfSales pos;
+    private PointOfSales pos; //*
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private User author;
+    private User author; //*
 
     public PointOfSales getPos() {
         return pos;
