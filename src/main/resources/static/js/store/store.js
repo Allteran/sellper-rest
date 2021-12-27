@@ -440,5 +440,15 @@ export default new Vuex.Store({
                 commit('removeRepairOrderMutation', order)
             }
         },
+
+        /**
+         * Module to download certificate
+         */
+        async getAcceptanceCertificateAction({commit}, order) {
+            const result = await repairOrderApi.getAcceptanceCertificate(order)
+            if(result.ok) {
+                console.log('Acceptance certificate generated successfully!')
+            }
+        }
     }
 })

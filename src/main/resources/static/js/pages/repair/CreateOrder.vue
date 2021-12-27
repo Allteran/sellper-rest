@@ -253,12 +253,18 @@ export default {
     this.getPOSListAction()
   },
   methods: {
-    ...mapActions(['getDeviceTypeListAction', 'getPOSListAction', 'addRepairOrderAction']),
+    ...mapActions(['getDeviceTypeListAction', 'getPOSListAction', 'addRepairOrderAction', 'getAcceptanceCertificateAction']),
     validate() {
       this.valid = this.$refs.form.validate()
     },
     printAcceptanceCertificate() {
-
+      this.validate()
+      if(this.valid) {
+        this.order.pos = this.selectedPOS
+        this.order.deviceType = this.selectedType
+        this.order.author = this.profile
+        this.getAcceptanceCertificateAction(this.order)
+      }
     },
     saveOrder() {
       this.validate()
