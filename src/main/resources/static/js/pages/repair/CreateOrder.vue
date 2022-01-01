@@ -1,6 +1,9 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
+      <v-alert v-if="generated" type="success">
+        {{ notificationMessage }}
+      </v-alert>
       <v-flex class="mt-4 mb-4">
         <h2>ЗАЯВКА НА РЕМОНТ</h2>
       </v-flex>
@@ -187,6 +190,7 @@
 
 <script>
 import {mapActions, mapState} from 'vuex'
+import axios from 'axios'
 
 export default {
   name: 'CreateOrder',
@@ -227,6 +231,8 @@ export default {
 
     },
     valid: false,
+    generated: false,
+    notificationMessage: '',
     selectedType: {
       id: '',
       name: '',
@@ -253,7 +259,7 @@ export default {
     this.getPOSListAction()
   },
   methods: {
-    ...mapActions(['getDeviceTypeListAction', 'getPOSListAction', 'addRepairOrderAction', 'getAcceptanceCertificateAction']),
+    ...mapActions(['getDeviceTypeListAction', 'getPOSListAction', 'addRepairOrderAction', 'generateAcceptanceCertificate']),
     validate() {
       this.valid = this.$refs.form.validate()
     },
@@ -263,7 +269,9 @@ export default {
         this.order.pos = this.selectedPOS
         this.order.deviceType = this.selectedType
         this.order.author = this.profile
-        this.getAcceptanceCertificateAction(this.order)
+        this.generateAcceptanceCertificate(this.order)
+        this.notificationMessage = 'Готово! Сейчас начнется загрузка документа'
+        this.generated = true
       }
     },
     saveOrder() {
@@ -274,8 +282,10 @@ export default {
         this.order.author = this.profile
 
         this.addRepairOrderAction(this.order)
+        this.$router.push('/repair/order')
       }
-    }
+    },
+
   }
 }
 

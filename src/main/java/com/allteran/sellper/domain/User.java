@@ -161,4 +161,9 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getShortName() {
+
+        return firstName + ". " +  lastName.charAt(0);
+    }
+
 }

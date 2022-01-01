@@ -1,18 +1,15 @@
 package com.allteran.sellper.service;
 
 import com.allteran.sellper.domain.RepairOrder;
-import com.allteran.sellper.domain.User;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -47,9 +44,10 @@ public class ExcelService {
         Sheet mainSheet = workbook.getSheetAt(0);
         Cell headerCell = mainSheet.getRow(6).getCell(1);
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         order.setCreationDate(LocalDateTime.now());
-        headerCell.setCellValue(ACCEPTANCE_HEADER + " " + dateFormat.format(order.getCreationDate()));
+        mainSheet.getRow(6).getCell(1).setCellValue(ACCEPTANCE_HEADER + " " + dateFormat.format(order.getCreationDate()));
+        mainSheet.getRow(36).getCell(1).setCellValue(ACCEPTANCE_HEADER + " " + dateFormat.format(order.getCreationDate()));
 
         //set POS params to cell
         mainSheet.getRow(2).getCell(1).setCellValue(order.getPos().getCity() + ", " + order.getPos().getStreet() + " " + order.getPos().getBuilding());
@@ -73,7 +71,7 @@ public class ExcelService {
 
         //set SN
         mainSheet.getRow(10).getCell(2).setCellValue(order.getSerialNumber());
-        mainSheet.getRow(49).getCell(2).setCellValue(order.getSerialNumber());
+        mainSheet.getRow(40).getCell(2).setCellValue(order.getSerialNumber());
 
         //set defect
         mainSheet.getRow(11).getCell(2).setCellValue(order.getDefect());

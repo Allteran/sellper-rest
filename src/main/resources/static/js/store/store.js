@@ -8,6 +8,7 @@ import posApi from '../api/pointOfSales'
 import deviceTypeApi from '../api/repairDeviceType'
 import repairStatusApi from '../api/repairStatus'
 import repairOrderApi from '../api/repairOrder'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -443,12 +444,26 @@ export default new Vuex.Store({
 
         /**
          * Module to download certificate
+         * AXIOS using only for download generated file
          */
-        async getAcceptanceCertificateAction({commit}, order) {
+        async generateAcceptanceCertificate({commit}, order) {
             const result = await repairOrderApi.getAcceptanceCertificate(order)
             if(result.ok) {
-                console.log('Acceptance certificate generated successfully!')
+                axios({
+                    url: 'http://localhost:8080/api/repair/order/new/generate/acceptance_cert',
+                    method: 'GET',
+                    responseType: 'blob',
+                }).then((response) => {
+                    let fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                    let fileLink = document.createElement('a');
+
+                    fileLink.href = fileURL;
+                    fileLink.setAttribute('download', 'ACCEPTANCE_CERTIFICATE.xlsx');
+                    document.body.appendChild(fileLink);
+
+                    fileLink.click();
+                });
             }
-        }
+        },
     }
 })

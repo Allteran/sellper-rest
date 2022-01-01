@@ -13,6 +13,7 @@
     "@stomp/stompjs": "^6.1.2",
     "@vuelidate/core": "^2.0.0-alpha.32",
     "@vuelidate/validators": "^2.0.0-alpha.25",
+    "axios": "^0.24.0",
     "es6-promise": "^4.2.8",
     "pages": "^0.0.16",
     "sockjs-client": "^1.5.2",

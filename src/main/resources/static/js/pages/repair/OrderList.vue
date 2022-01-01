@@ -47,18 +47,21 @@ export default {
       {text: 'Дефект', value: 'defect'},
       {text: 'Дата приема', value: 'creationDate'},
       {text: 'Дата выдачи', value: 'issueDate'},
-      {text: 'Статус', value: 'status'},
+      {text: 'Статус', value: 'status.name'},
       {text: 'Стоимость', value: 'totalPrice'},
       {text: 'Точка продаж', value: 'pos.street'},
-      {text: 'Сотрудник', value: 'author.lastName'}
+      {text: 'Сотрудник', value: 'author.getShortName'}
     ],
 
   }),
+  beforeMount() {
+    this.getRepairOrderListAction()
+  },
   computed: {
     ...mapState(['profile', 'repairOrderList']),
   },
   methods: {
-    ...mapActions(['getPOSListAction', 'addPOSAction', 'updatePOSAction', 'getPOSTypeListAction']),
+    ...mapActions(['getPOSListAction', 'addPOSAction', 'updatePOSAction', 'getPOSTypeListAction', 'getRepairOrderListAction']),
 
     clickRow(item) {
       // this.$router.push({name: 'user-edit', params: {id: item.id}})
