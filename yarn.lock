@@ -2433,8 +2433,7 @@
   "version" "1.1.1"
 
 "gaze@git+https://github.com/brett-shwom/gaze.git":
-  "integrity" "sha512-loV4AFwXDEJgHrDYh5qNCfOF8Td3U+LutUecrN71u870Mq1tRKPBUY8l4oN5eASOfsg/TUv7+ghbbD0W1XOWsQ=="
-  "resolved" "git+ssh://git@github.com/brett-shwom/gaze.git"
+  "resolved" "git+ssh://git@github.com/brett-shwom/gaze.git#e97f9ad4eec89d812cd1ad6df111b7404de7d6cb"
   "version" "0.4.2"
   dependencies:
     "globule" "~0.1.0"
@@ -3392,6 +3391,11 @@
     "jade" "0.26.3"
     "mkdirp" "0.3.3"
     "ms" "0.3.0"
+
+"moment@^2.29.1":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
 
 "monocle@~0.1.46":
   "integrity" "sha1-mny9DMwQ3pX9eKBLm+skgq5JQLc="

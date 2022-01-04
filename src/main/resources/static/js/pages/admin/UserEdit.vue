@@ -226,7 +226,6 @@ export default {
     this.user = this.users.find(u => u.id === this.$route.params.id)
     console.log('beforeMount')
     console.log('isActive = ', this.user.active)
-    this.isActive = this.user.active
   },
   methods: {
     ...mapActions(['updateUserAction']),

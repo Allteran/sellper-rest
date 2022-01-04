@@ -13,6 +13,7 @@ import DeviceType from 'pages/admin/DeviceType.vue'
 import RepairStatus from 'pages/admin/RepairStatus.vue'
 import OrderList from 'pages/repair/OrderList.vue'
 import CreateOrder from 'pages/repair/CreateOrder.vue'
+import OrderDetails from 'pages/repair/OrderDetails.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,7 @@ const routes = [
     {path: '/adm/repair/status', component: RepairStatus},
     {path: '/repair/order', component: OrderList},
     {path: '/repair/order/new', component: CreateOrder},
+    {path: '/repair/order/:id', name: 'order-details', component: OrderDetails},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}
 ]

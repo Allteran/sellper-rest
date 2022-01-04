@@ -34,7 +34,7 @@ public class ExcelService {
         FileInputStream file = null;
         Workbook workbook = null;
         try {
-            file = new FileInputStream(new File(path));
+            file = new FileInputStream(path);
             workbook = new XSSFWorkbook(file);
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,10 +42,11 @@ public class ExcelService {
 
         assert workbook != null;
         Sheet mainSheet = workbook.getSheetAt(0);
-        Cell headerCell = mainSheet.getRow(6).getCell(1);
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        order.setCreationDate(LocalDateTime.now());
+        if(order.getCreationDate() == null) {
+            order.setCreationDate(LocalDateTime.now());
+        }
         mainSheet.getRow(6).getCell(1).setCellValue(ACCEPTANCE_HEADER + " " + dateFormat.format(order.getCreationDate()));
         mainSheet.getRow(36).getCell(1).setCellValue(ACCEPTANCE_HEADER + " " + dateFormat.format(order.getCreationDate()));
 

@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
 //        roles.add(Role.ADMIN);
 //
 //        user.setRoles(roles);
-        user.setActive(true);
+        user.setActive(false);
         user.setRoles(Collections.singleton(Role.USER));
         user.setDealerId(Const.DEFAULT_DEALER_ID);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
