@@ -14,6 +14,7 @@ import RepairStatus from 'pages/admin/RepairStatus.vue'
 import OrderList from 'pages/repair/OrderList.vue'
 import CreateOrder from 'pages/repair/CreateOrder.vue'
 import OrderDetails from 'pages/repair/OrderDetails.vue'
+import OrderEdit from 'pages/repair/OrderEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,7 @@ const routes = [
     {path: '/repair/order', component: OrderList},
     {path: '/repair/order/new', component: CreateOrder},
     {path: '/repair/order/:id', name: 'order-details', component: OrderDetails},
+    {path: '/repair/order/edit/:id', name: 'order-edit', component: OrderEdit},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}
 ]

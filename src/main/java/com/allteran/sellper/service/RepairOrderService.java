@@ -28,6 +28,10 @@ public class RepairOrderService {
         return orderRepo.findAll();
     }
 
+    public RepairOrder findById(Long id) {
+        return orderRepo.findById(id).get();
+    }
+
     public RepairOrder createOrder(RepairOrder order) {
         order.setCreationDate(LocalDateTime.now());
         order.setIssueDate(LocalDateTime.of(2000,1,1,1,1));
@@ -39,10 +43,21 @@ public class RepairOrderService {
 
     public RepairOrder updateOrder(RepairOrder orderFromDb, RepairOrder order) {
         BeanUtils.copyProperties(order, orderFromDb, "id");
+        if(order.getIssueDate() == null || orderFromDb.getIssueDate() == null) {
+            orderFromDb.setIssueDate(LocalDateTime.now());
+        }
+        orderFromDb.setServicePrice(orderFromDb.getTotalPrice() - orderFromDb.getMarginPrice() - orderFromDb.getComponentPrice());
+
+        orderFromDb.setDirectorProfit(orderFromDb.getServicePrice() * 0.45 + orderFromDb.getMarginPrice()*0.5);
+        orderFromDb.setRepManProfit(orderFromDb.getDirectorProfit() + orderFromDb.getComponentPrice());
+        order.setManagerProfit(orderFromDb.getServicePrice() * 0.1);
+
         return orderRepo.save(orderFromDb);
     }
 
     public void deleteOrder(RepairOrder order) {
         orderRepo.delete(order);
     }
+
+
 }

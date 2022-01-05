@@ -30,6 +30,7 @@
         <v-text-field
             v-model="creationDate"
             label="Дата приема"
+            prepend-icon="mdi-calendar"
             readonly
         ></v-text-field>
       </v-col>
@@ -40,6 +41,7 @@
         <v-text-field
             v-model="order.status.name"
             label="Статус ремонта"
+            prepend-icon="mdi-check"
             readonly
         ></v-text-field>
       </v-col>
@@ -50,7 +52,8 @@
         <v-text-field
             v-model="issueDate"
             label="Дата выдачи"
-            :color="textColor"
+            prepend-icon="mdi-calendar"
+            :color="issueDateColor"
             readonly
         ></v-text-field>
       </v-col>
@@ -66,6 +69,7 @@
         <v-text-field
             v-model="order.customerName"
             label="Заказчик"
+            prepend-icon="mdi-account"
             readonly
         ></v-text-field>
       </v-col>
@@ -76,6 +80,7 @@
         <v-text-field
             v-model="order.customerPhone"
             label="Контактный номер телефона"
+            prepend-icon="mdi-phone"
             readonly
         ></v-text-field>
       </v-col>
@@ -91,6 +96,7 @@
         <v-text-field
             v-model="order.deviceType.name"
             label="Тип устройства"
+            prepend-icon="mdi-cellphone"
             readonly
         ></v-text-field>
       </v-col>
@@ -101,6 +107,7 @@
         <v-text-field
             v-model="order.deviceName"
             label="Модель устройства"
+            prepend-icon="mdi-cellphone-text"
             readonly
         ></v-text-field>
       </v-col>
@@ -111,6 +118,7 @@
         <v-text-field
             v-model="order.serialNumber"
             label="Серийный номер (IMEI)"
+            prepend-icon="mdi-numeric"
             readonly
         ></v-text-field>
       </v-col>
@@ -122,6 +130,7 @@
         <v-text-field
             v-model="order.defect"
             label="Описание неисправности"
+            prepend-icon="mdi-comment-text-outline"
             readonly
         ></v-text-field>
       </v-col>
@@ -134,6 +143,7 @@
         <v-text-field
             v-model="order.appearance"
             label="Состояние устройства"
+            prepend-icon="mdi-cellphone-information"
             readonly
         ></v-text-field>
       </v-col>
@@ -144,51 +154,70 @@
         <v-text-field
             v-model="order.warranty"
             label="Гарантийный срок"
+            prepend-icon="mdi-alert-circle"
             readonly
         ></v-text-field>
       </v-col>
     </v-row>
     <v-flex class="mt-4 mb-2">
-      <h3>Цены и оплата</h3>
+      <h3>Выполненные работы и цены</h3>
     </v-flex>
     <v-row>
       <v-col
           cols="auto"
-          md="3"
+          md="6"
+      >
+        <v-text-field
+            v-model="order.performedActions"
+            label="Проведенные работы"
+            :color="performedActionsColor"
+            prepend-icon="mdi-cog-outline"
+            readonly
+        ></v-text-field>
+      </v-col>
+      <v-col
+          cols="auto"
+          md="6"
       >
         <v-text-field
             v-model="order.preliminaryPrice"
             label="Предварительная цена"
+            prepend-icon="mdi-cash"
             readonly
         ></v-text-field>
       </v-col>
+    </v-row>
+    <v-row>
       <v-col
           cols="auto"
-          md="3"
+          md="4"
       >
         <v-text-field
             v-model="order.componentPrice"
             label="Стоимость запчастей"
+            prepend-icon="mdi-cash"
             readonly
         ></v-text-field>
       </v-col>
       <v-col
           cols="auto"
-          md="3"
+          md="4"
       >
         <v-text-field
             v-model="order.marginPrice"
             label="Маржа"
+            prepend-icon="mdi-cash"
             readonly
         ></v-text-field>
       </v-col>
       <v-col
           cols="auto"
-          md="3"
+          md="4"
       >
         <v-text-field
             v-model="order.totalPrice"
             label="Итоговая цена"
+            prepend-icon="mdi-cash"
             readonly
         ></v-text-field>
       </v-col>
@@ -221,7 +250,6 @@
           dark
           color="indigo"
           @click="printAcceptanceCertificate"
-
       >
         <v-icon>mdi-printer-outline</v-icon>
       </v-btn>
@@ -229,6 +257,7 @@
           fab
           dark
           color="red"
+          @click="showEditPage"
       >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
@@ -246,7 +275,8 @@ export default {
     order: [],
     creationDate: [],
     issueDate: [],
-    textColor: 'black',
+    issueDateColor: 'black',
+    performedActionsColor: 'black',
     fab: false,
     notificationMessage: '',
     generated: false,
@@ -259,9 +289,13 @@ export default {
     this.creationDate = this.dateFormat(this.order.creationDate)
     if(this.order.issueDate === '2000-01-01T01:01:00') {
       this.issueDate = 'Не выдан'
-      this.textColor = 'red'
+      this.issueDateColor = 'red'
     } else {
       this.issueDate = this.dateFormat(this.order.issueDate)
+    }
+
+    if(this.order.performedActions === '') {
+      this.performedActionsColor = 'red'
     }
   },
   methods: {
@@ -273,6 +307,9 @@ export default {
       this.generateAcceptanceCertificate(this.order)
       this.generated = true
       this.notificationMessage = 'Сейчас начнется повторная загрузка акта устройства приема на ремонт'
+    },
+    showEditPage() {
+      this.$router.push({name: 'order-edit', params: {id: this.order.id}})
     }
   }
 }

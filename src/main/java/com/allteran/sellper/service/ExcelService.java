@@ -96,4 +96,67 @@ public class ExcelService {
         return new ByteArrayInputStream(outputStream.toByteArray());
     }
 
+    public ByteArrayInputStream generateRepairCertificate(@NotNull RepairOrder order) throws IOException {
+        File currentDir = new File(".");
+        String path = currentDir.getAbsolutePath().substring(0, currentDir.getAbsolutePath().length() - 1) +
+                XLSX_TEMPLATE_DIR + REPAIR_XLSX_TEMPLATE_NAME;
+        FileInputStream file;
+        Workbook workbook = null;
+        try {
+            file = new FileInputStream(path);
+            workbook = new XSSFWorkbook(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert workbook != null;
+        Sheet mainSheet = workbook.getSheetAt(0);
+
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        //header
+        mainSheet.getRow(7).getCell(1).setCellValue(REPAIR_HEADER + " " + dateFormat.format(order.getIssueDate()));
+        mainSheet.getRow(41).getCell(1).setCellValue(REPAIR_HEADER + " " + dateFormat.format(order.getIssueDate()));
+
+        //POS params
+        mainSheet.getRow(2).getCell(1).setCellValue(order.getPos().getCity() + ", " + order.getPos().getStreet() + ", " + order.getPos().getBuilding());
+        mainSheet.getRow(36).getCell(1).setCellValue(order.getPos().getCity() + ", " + order.getPos().getStreet() + ", " + order.getPos().getBuilding());
+
+        //author
+        mainSheet.getRow(4).getCell(1).setCellValue(order.getAuthor().getFirstName() + " " + order.getAuthor().getLastName());
+        mainSheet.getRow(38).getCell(1).setCellValue(order.getAuthor().getFirstName() + " " + order.getAuthor().getLastName());
+
+        //customer name
+        mainSheet.getRow(8).getCell(2).setCellValue(order.getCustomerName());
+        mainSheet.getRow(42).getCell(2).setCellValue(order.getCustomerName());
+
+        //device name and type
+        mainSheet.getRow(9).getCell(2).setCellValue(order.getDeviceType().getName() + " " + order.getDeviceName());
+        mainSheet.getRow(43).getCell(2).setCellValue(order.getDeviceType().getName() + " " + order.getDeviceName());
+
+        //SN or IMEI
+        mainSheet.getRow(10).getCell(2).setCellValue(order.getSerialNumber());
+        mainSheet.getRow(44).getCell(2).setCellValue(order.getSerialNumber());
+
+        //defect
+        mainSheet.getRow(11).getCell(2).setCellValue(order.getDefect());
+        mainSheet.getRow(45).getCell(2).setCellValue(order.getDefect());
+
+        //warranty period
+        mainSheet.getRow(13).getCell(2).setCellValue(order.getWarranty());
+        mainSheet.getRow(47).getCell(2).setCellValue(order.getWarranty());
+
+        //performed actions
+        mainSheet.getRow(16).getCell(1).setCellValue(order.getPerformedActions());
+        mainSheet.getRow(50).getCell(1).setCellValue(order.getPerformedActions());
+
+        //total price
+        mainSheet.getRow(16).getCell(2).setCellValue(order.getTotalPrice());
+        mainSheet.getRow(50).getCell(2).setCellValue(order.getTotalPrice());
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        return new ByteArrayInputStream(outputStream.toByteArray());
+    }
 }

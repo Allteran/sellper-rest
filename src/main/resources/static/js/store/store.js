@@ -12,6 +12,8 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
+const HOST = 'http://localhost:8080/'
+
 export default new Vuex.Store({
     state: {
         nomList: frontendData.nomList,
@@ -450,7 +452,7 @@ export default new Vuex.Store({
             const result = await repairOrderApi.getAcceptanceCertificate(order)
             if(result.ok) {
                 axios({
-                    url: 'http://localhost:8080/api/repair/order/new/generate/acceptance_cert',
+                    url: HOST + 'api/repair/order/new/generate/acceptance_cert',
                     method: 'GET',
                     responseType: 'blob',
                 }).then((response) => {
@@ -460,10 +462,28 @@ export default new Vuex.Store({
                     fileLink.href = fileURL;
                     fileLink.setAttribute('download', 'ACCEPTANCE_CERTIFICATE.xlsx');
                     document.body.appendChild(fileLink);
-
                     fileLink.click();
                 });
             }
         },
+
+        async generateRepairCertificate({commit}, order) {
+            const result = await repairOrderApi.generateRepairCertificate(order)
+            if (result.ok) {
+                axios({
+                    url: HOST + 'api/repair/order/generate/repair_cert',
+                    method: 'GET',
+                    responseType: 'blob',
+                }).then((response) => {
+                    let fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                    let fileLink = document.createElement('a');
+
+                    fileLink.href = fileURL;
+                    fileLink.setAttribute('download', 'REPAIR_CERTIFICATE.xlsx');
+                    document.body.appendChild(fileLink);
+                    fileLink.click();
+                });
+            }
+        }
     }
 })

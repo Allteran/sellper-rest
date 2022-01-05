@@ -227,8 +227,6 @@ export default {
       directorProfit: '',
       repManProfit: '',
       managerProfit: '',
-
-
     },
     valid: false,
     generated: false,

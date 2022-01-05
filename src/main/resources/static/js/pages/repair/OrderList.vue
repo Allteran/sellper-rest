@@ -90,7 +90,6 @@ export default {
     },
 
     clickRow(item) {
-      // this.$router.push({name: 'user-edit', params: {id: item.id}})
       this.$router.push({name: 'order-details', params: {id: item.id}})
 
     },
