@@ -346,6 +346,31 @@
             cols="8"
             md="4"
         >
+          <v-dialog
+              v-model="saveChangesDialog"
+              persistent
+              max-width="400"
+          >
+            <template v-slot:activator="{ on, attrs }">
+            </template>
+            <v-card>
+              <v-card-title class="text-h5">
+                Отлично!
+              </v-card-title>
+              <v-card-text>Данные успешно сохранены. Нажмите "ОК", чтобы перейти к реестру ремонта</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+               <v-btn
+                    color="green darken-1"
+                    text
+                    @click="redirectToOrderList"
+                >
+                  OK
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
           <v-btn
               block
               depressed
@@ -378,6 +403,7 @@ export default {
     ],
     generated: false,
     discardChangesDialog: false,
+    saveChangesDialog: false,
     valid: false,
     notificationMessage: '',
     order: [],
@@ -443,9 +469,13 @@ export default {
       this.validate()
       if(this.valid) {
         this.updateRepairOrderAction(this.order)
+        this.saveChangesDialog = true
       }
     },
     discardChanges() {
+      this.$router.push('/repair/order')
+    },
+    redirectToOrderList() {
       this.$router.push('/repair/order')
     }
   }

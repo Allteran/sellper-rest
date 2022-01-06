@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-const orderList = Vue.resource('/api/repair/order{id}')
+const orderList = Vue.resource('/api/repair/order/{id}')
 const acceptanceCertificate = Vue.resource('/api/repair/order/new/generate/acceptance_cert')
 const repairCertificate = Vue.resource('/api/repair/order/generate/repair_cert')
 

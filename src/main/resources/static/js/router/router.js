@@ -19,7 +19,8 @@ import OrderEdit from 'pages/repair/OrderEdit.vue'
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '/', component: NomList},
+    // {path: '/', component: NomList},
+    {path: '/', redirect: '/repair/order'},
     {path: '/profile', component: Profile},
     {path: '/profileEdit', component: ProfileEdit},
     {path: '/adm', component: AdminPanel},
@@ -31,7 +32,7 @@ const routes = [
     {path: '/adm/repair/status', component: RepairStatus},
     {path: '/repair/order', component: OrderList},
     {path: '/repair/order/new', component: CreateOrder},
-    {path: '/repair/order/:id', name: 'order-details', component: OrderDetails},
+    {path: '/repair/order/view/:id', name: 'order-details', component: OrderDetails},
     {path: '/repair/order/edit/:id', name: 'order-edit', component: OrderEdit},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}

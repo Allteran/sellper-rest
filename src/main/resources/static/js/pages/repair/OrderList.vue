@@ -6,6 +6,7 @@
         :items-per-page="15"
         @click:row="clickRow"
         fixed-header
+        sort-by="issueDate"
         class="elevation-1"
     >
       <template v-slot:item.author="{ item }">
@@ -15,8 +16,7 @@
         <td v-text="dateFormat(item.creationDate)"></td>
       </template>
       <template v-slot:item.issueDate="{ item }">
-        <td v-if="'2000-01-01T01:01:00'">Не выдан</td>
-        <td v-else v-text="dateFormat(item.issueDate)"></td>
+        <td v-text="dateFormat(item.issueDate)"></td>
       </template>
       <template v-slot:item.status="{ item }">
         <v-chip
@@ -95,7 +95,11 @@ export default {
     },
 
     dateFormat(date) {
-      return moment(date).format('DD.MM.YYYY')
+      if(date === '2000-01-01T01:01:00') {
+        return 'Не выдан'
+      } else {
+        return moment(date).format('DD.MM.YYYY')
+      }
     },
 
     showCreateOrderPage() {

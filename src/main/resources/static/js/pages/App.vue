@@ -7,10 +7,12 @@
     >
       <v-toolbar-title>Sellper</v-toolbar-title>
       <v-btn text
+             v-if="isAdmin"
       >
         Личные продажи
       </v-btn>
       <v-btn text
+             v-if="isAdmin"
       >
         Выполнение KPI
       </v-btn>
