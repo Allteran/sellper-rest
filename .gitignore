@@ -34,3 +34,4 @@ build/
 
 /src/main/resources/static/js/
 yarn.lock
+.gradle
