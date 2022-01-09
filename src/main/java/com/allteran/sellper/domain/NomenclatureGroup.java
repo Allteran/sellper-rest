@@ -1,14 +1,9 @@
 package com.allteran.sellper.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import javax.persistence.*;
 
 @Entity
 @Table
-@ToString(of = {"id", "name"})
-@EqualsAndHashCode(of = {"id"})
 public class NomenclatureGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

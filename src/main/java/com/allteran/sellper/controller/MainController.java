@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/")
 public class MainController {
     private final NomenclatureRepo nomenclatureRepo;
-    @Value("${spring.profiles.active}")
+    @Value("${spring.profiles.active:prod}")
     private String profile;
 
     @Autowired

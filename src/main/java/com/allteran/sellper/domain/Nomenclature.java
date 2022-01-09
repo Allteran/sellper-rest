@@ -1,15 +1,11 @@
 package com.allteran.sellper.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Table
-@ToString(of = {"id", "name", "group", "price"})
-@EqualsAndHashCode(of = {"id"})
 public class Nomenclature {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

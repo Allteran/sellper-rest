@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import NomList from 'components/nomenclature/NomList.vue'
+import NomList from 'nomenclature/NomList.vue'
 import Profile from 'pages/Profile.vue'
 import ProfileEdit from 'pages/ProfileEdit.vue'
 import NotFound from 'pages/NotFound.vue'
