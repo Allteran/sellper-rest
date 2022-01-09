@@ -11,7 +11,7 @@ node {
 
 group = 'com.allteran.sellper'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.9'
 
 task buildFront(type: YarnTask) {
     args = ['build']
