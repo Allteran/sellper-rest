@@ -15,12 +15,12 @@ import OrderList from 'pages/repair/OrderList.vue'
 import CreateOrder from 'pages/repair/CreateOrder.vue'
 import OrderDetails from 'pages/repair/OrderDetails.vue'
 import OrderEdit from 'pages/repair/OrderEdit.vue'
+import StartPage from 'pages/StartPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-    // {path: '/', component: NomList},
-    {path: '/', redirect: '/repair/order'},
+    {path: '/', component: StartPage},
     {path: '/profile', component: Profile},
     {path: '/profileEdit', component: ProfileEdit},
     {path: '/adm', component: AdminPanel},
