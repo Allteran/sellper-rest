@@ -17,6 +17,10 @@ task buildFront(type: YarnTask) {
     args = ['build']
 }
 
+jar {
+    enabled = false
+}
+
 yarn_install.dependsOn(yarn_cache_clean)
 buildFront.dependsOn(yarn_install)
 processResources.dependsOn(buildFront)
