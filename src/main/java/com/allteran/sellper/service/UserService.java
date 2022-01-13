@@ -45,14 +45,14 @@ public class UserService implements UserDetailsService {
             return false;
         }
         user.setCreationDate(LocalDateTime.now());
-        Set<Role> roles = new HashSet<>();
-        roles.add(Role.USER);
-        roles.add(Role.MANAGER);
-        roles.add(Role.ADMIN);
-
-        user.setRoles(roles);
-        user.setActive(true);
-//        user.setRoles(Collections.singleton(Role.USER));
+//        Set<Role> roles = new HashSet<>();
+//        roles.add(Role.USER);
+//        roles.add(Role.MANAGER);
+//        roles.add(Role.ADMIN);
+//
+//        user.setRoles(roles);
+        user.setActive(false);
+        user.setRoles(Collections.singleton(Role.USER));
         user.setDealerId(Const.DEFAULT_DEALER_ID);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
