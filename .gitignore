@@ -36,3 +36,5 @@ build/
 yarn.lock
 .gradle/*
 /.gradle/
+node_modules
+
