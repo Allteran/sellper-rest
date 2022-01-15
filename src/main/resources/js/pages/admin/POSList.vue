@@ -5,7 +5,6 @@
         :headers="headers"
         :items="posList"
         :items-per-page="15"
-        @click:row="clickRow"
         class="elevation-1"
     >
       <template v-slot:top>
@@ -41,20 +40,6 @@
 
               <v-card-text>
                 <v-container>
-                  <v-row>
-                    <v-col
-                        cols="12"
-                        sm="12"
-                        md="12"
-                    >
-                      <v-text-field
-                          v-model="editedItem.id"
-                          label="ID"
-                          :rules="idRules"
-                          type="number"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
                   <v-row>
                     <v-col
                         cols="12"
@@ -212,9 +197,6 @@ export default {
   methods: {
     ...mapActions(['getPOSListAction', 'addPOSAction', 'updatePOSAction', 'getPOSTypeListAction']),
 
-    clickRow(item) {
-      // this.$router.push({name: 'user-edit', params: {id: item.id}})
-    },
     validate() {
       this.valid = this.$refs.form.validate()
     },
@@ -241,6 +223,7 @@ export default {
         } else {
           this.addPOSAction(this.editedItem)
         }
+        this.$refs.form.resetValidation()
         this.close()
       }
     },

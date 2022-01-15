@@ -27,7 +27,7 @@ public class POSController {
         return pos;
     }
 
-    @PostMapping
+    @PostMapping()
     public PointOfSales create(@RequestBody PointOfSales pos) {
         return posService.create(pos);
     }

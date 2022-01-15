@@ -261,12 +261,18 @@ export default {
     validate() {
       this.valid = this.$refs.form.validate()
     },
+
+    prepareOrder() {
+      this.order.pos = this.selectedPOS
+      this.order.deviceType = this.selectedType
+      this.order.author = this.profile
+      this.order.issueDate = '2000-01-01T01:01:00'
+    },
+
     printAcceptanceCertificate() {
       this.validate()
       if(this.valid) {
-        this.order.pos = this.selectedPOS
-        this.order.deviceType = this.selectedType
-        this.order.author = this.profile
+        this.prepareOrder()
         this.generateAcceptanceCertificate(this.order)
         this.notificationMessage = 'Готово! Сейчас начнется загрузка документа'
         this.generated = true
@@ -275,9 +281,7 @@ export default {
     saveOrder() {
       this.validate()
       if(this.valid) {
-        this.order.pos = this.selectedPOS
-        this.order.deviceType = this.selectedType
-        this.order.author = this.profile
+        this.prepareOrder()
 
         this.addRepairOrderAction(this.order)
         this.$router.push('/repair/order')

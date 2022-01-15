@@ -15,7 +15,7 @@ import java.util.List;
 public class RepairOrderService {
     @Value("${repair.status.created.id}")
     private String STATUS_CREATED_ID;
-    @Value("${repair.stats.paid.id}")
+    @Value("${repair.status.paid.id}")
     private String STATUS_PAID_ID;
 
     private static final LocalDateTime DEFAULT_DATE = LocalDateTime.of(2000,1,1,1,1);

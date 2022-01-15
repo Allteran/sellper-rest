@@ -151,8 +151,10 @@ public class ExcelService {
         mainSheet.getRow(50).getCell(1).setCellValue(order.getPerformedActions());
 
         //total price
-        mainSheet.getRow(16).getCell(2).setCellValue(order.getTotalPrice());
-        mainSheet.getRow(50).getCell(2).setCellValue(order.getTotalPrice());
+        mainSheet.getRow(16).getCell(9).setCellValue(order.getTotalPrice());
+        mainSheet.getRow(18).getCell(9).setCellValue(order.getTotalPrice());
+        mainSheet.getRow(50).getCell(9).setCellValue(order.getTotalPrice());
+        mainSheet.getRow(52).getCell(9).setCellValue(order.getTotalPrice());
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         workbook.write(outputStream);

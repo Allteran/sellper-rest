@@ -22,6 +22,15 @@ public class MainController {
     @Value("${spring.profiles.active:prod}")
     private String profile;
 
+    @Value("${repair.status.unrepaired.id}")
+    private int REPAIR_STATUS_UNREPAIRED;
+
+    @Value("${repair.status.paid.id}")
+    private int REPAIR_STATUS_PAID;
+
+    @Value("${repair.status.repaired.id}")
+    private int REPAIR_STATUS_REPAIRED;
+
     @Autowired
     public MainController(NomenclatureRepo nomenclatureRepo) {
         this.nomenclatureRepo = nomenclatureRepo;
@@ -40,6 +49,9 @@ public class MainController {
             data.put("nomList", nomenclatureRepo.findAll());
             data.put("profile", user);
             data.put("roles", roles);
+            data.put("statusIdPaid", REPAIR_STATUS_PAID);
+            data.put("statusIdUnrepaired", REPAIR_STATUS_UNREPAIRED);
+            data.put("statusIdRepaired", REPAIR_STATUS_REPAIRED);
         }
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));

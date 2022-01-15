@@ -78,14 +78,14 @@ export default {
     this.getRepairOrderListAction()
   },
   computed: {
-    ...mapState(['profile', 'repairOrderList']),
+    ...mapState(['profile', 'repairOrderList', 'statusIdRepaired', 'statusIdUnrepaired', 'statusIdPaid']),
   },
   methods: {
     ...mapActions(['getRepairOrderListAction']),
     getChipColor(id) {
-      if(id === 13) return 'red'
-      else if(id === 12) return 'green'
-      else if(id === 11) return 'yellow'
+      if(id === this.statusIdUnrepaired) return 'red'
+      else if(id === this.statusIdPaid) return 'green'
+      else if(id === this.statusIdRepaired) return 'yellow'
       else return 'black'
     },
 

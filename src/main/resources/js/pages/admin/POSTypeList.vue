@@ -152,6 +152,7 @@ export default {
     },
 
     save() {
+      console.log('this.editedItem.id =', this.editedItem.id)
       if (this.editedItem.id) {
         this.updatePOSTypeAction(this.editedItem)
       } else {
