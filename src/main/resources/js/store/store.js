@@ -12,7 +12,7 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-const HOST = 'http://localhost:8080/'
+// const HOST = 'http://localhost:8080/'
 
 export default new Vuex.Store({
     state: {
@@ -455,7 +455,7 @@ export default new Vuex.Store({
             const result = await repairOrderApi.getAcceptanceCertificate(order)
             if(result.ok) {
                 axios({
-                    url: HOST + 'api/repair/order/new/generate/acceptance_cert',
+                    url: location.origin + '/api/repair/order/new/generate/acceptance_cert',
                     method: 'GET',
                     responseType: 'blob',
                 }).then((response) => {
@@ -474,7 +474,7 @@ export default new Vuex.Store({
             const result = await repairOrderApi.generateRepairCertificate(order)
             if (result.ok) {
                 axios({
-                    url: HOST + 'api/repair/order/generate/repair_cert',
+                    url: location.origin + '/api/repair/order/generate/repair_cert',
                     method: 'GET',
                     responseType: 'blob',
                 }).then((response) => {
