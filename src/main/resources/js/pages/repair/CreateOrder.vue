@@ -1,9 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      <v-alert v-if="generated" type="success">
-        {{ notificationMessage }}
-      </v-alert>
       <v-flex class="mt-4 mb-4">
         <h2>ЗАЯВКА НА РЕМОНТ</h2>
       </v-flex>
@@ -30,7 +27,6 @@
           <v-text-field
               v-model="order.deviceName"
               :rules="inputFieldRules"
-              :counter="15"
               label="Модель устройства"
               required
           ></v-text-field>
@@ -42,7 +38,6 @@
           <v-text-field
               v-model="order.serialNumber"
               :rules="inputFieldRules"
-              :counter="15"
               label="Серийный номер"
               required
           ></v-text-field>
@@ -56,7 +51,6 @@
           <v-text-field
               v-model="order.customerName"
               :rules="inputFieldRules"
-              :counter="45"
               label="Заказчик"
               required
           ></v-text-field>
@@ -84,7 +78,6 @@
               v-model="order.defect"
               :rules="inputFieldRules"
               label="Заявленная неисправность"
-              :counter="45"
               required
           ></v-text-field>
         </v-col>
@@ -96,7 +89,6 @@
               v-model="order.equipSet"
               :rules="inputFieldRules"
               label="Комплектация устройства"
-              :counter="45"
               required
           ></v-text-field>
         </v-col>
@@ -108,7 +100,6 @@
               v-model="order.appearance"
               :rules="inputFieldRules"
               label="Состояние устройства"
-              :counter="45"
               required
           ></v-text-field>
         </v-col>
@@ -137,13 +128,60 @@
               v-model="order.preliminaryPrice"
               :rules="inputFieldRules"
               label="Предварительная цена"
-              :counter="5"
               type="number"
               required
           ></v-text-field>
         </v-col>
       </v-row>
+      <v-dialog
+          v-model="certificateDialog"
+          persistent
+          max-width="400"
+      >
+        <template v-slot:activator="{ on, attrs }">
+        </template>
+        <v-card>
+          <v-card-title class="text-h5">
+            Отлично!
+          </v-card-title>
+          <v-card-text>Отлично! Сейчас начнется скачивание акта. Не забудьте сохранить заявку</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="green darken-1"
+                text
+                @click="closeCertificateDialog"
+            >
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
+      <v-dialog
+          v-model="saveOrderDialog"
+          persistent
+          max-width="400"
+      >
+        <template v-slot:activator="{ on, attrs }">
+        </template>
+        <v-card>
+          <v-card-title class="text-h5">
+            Отлично!
+          </v-card-title>
+          <v-card-text>Вы успешно сохранили заявку. Сейчас вы будете перенаправлены на страницу реестра</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="green darken-1"
+                text
+                @click="redirectToOrderList"
+            >
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-container>
     <v-speed-dial
         v-model="fab"
@@ -229,8 +267,8 @@ export default {
       managerProfit: '',
     },
     valid: false,
-    generated: false,
-    notificationMessage: '',
+    certificateDialog: false,
+    saveOrderDialog: false,
     selectedType: {
       id: '',
       name: '',
@@ -267,6 +305,7 @@ export default {
       this.order.deviceType = this.selectedType
       this.order.author = this.profile
       this.order.issueDate = '2000-01-01T01:01:00'
+      this.order.creationDate = new Date().toISOString()
     },
 
     printAcceptanceCertificate() {
@@ -274,19 +313,25 @@ export default {
       if(this.valid) {
         this.prepareOrder()
         this.generateAcceptanceCertificate(this.order)
-        this.notificationMessage = 'Готово! Сейчас начнется загрузка документа'
-        this.generated = true
+        this.certificateDialog = true;
       }
     },
     saveOrder() {
       this.validate()
       if(this.valid) {
         this.prepareOrder()
-
         this.addRepairOrderAction(this.order)
-        this.$router.push('/repair/order')
+        this.saveOrderDialog = true;
       }
     },
+    closeCertificateDialog() {
+      this.certificateDialog = false;
+    },
+    redirectToOrderList() {
+      this.certificateDialog = false;
+      this.saveOrderDialog = false;
+      this.$router.push('/repair/order')
+    }
 
   }
 }

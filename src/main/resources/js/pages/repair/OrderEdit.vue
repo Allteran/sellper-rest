@@ -235,7 +235,6 @@
         >
           <v-text-field
               v-model="order.preliminaryPrice"
-              :rules="inputFieldRules"
               label="Предварительная цена"
               type="number"
               prepend-icon="mdi-cash"
@@ -360,7 +359,7 @@
               <v-card-text>Данные успешно сохранены. Нажмите "ОК", чтобы перейти к реестру ремонта</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-               <v-btn
+                <v-btn
                     color="green darken-1"
                     text
                     @click="redirectToOrderList"
@@ -419,10 +418,11 @@ export default {
     this.order = this.repairOrderList.find(o => o.id === this.$route.params.id)
     this.getDeviceTypeListAction()
     this.getRepairStatusListAction()
+
     this.creationDate = new Date(this.order.creationDate).toISOString().substr(0, 10)
 
-    if(this.order.issueDate === '2000-01-01T01:01:00') {
-      this.issueDate = new Date('undefined').toISOString()
+    if(this.order.issueDate === '2000-01-01T01:01:00' || this.order.issueDate === null || this.order.issueDate === []) {
+      this.issueDate = []
     } else {
       this.issueDate = new Date(this.order.issueDate).toISOString().substr(0, 10)
     }
@@ -435,7 +435,7 @@ export default {
     },
     totalPriceRule(value) {
       const sum = this.order.componentPrice + this.order.marginPrice
-      if(sum >= value) {
+      if(sum > value) {
         return 'Итоговая цена не может быть меньше суммы остальных цен'
       } else if(value === '') {
         return 'Поле не может быть пустым'
@@ -446,8 +446,14 @@ export default {
     validate() {
       const priceSum = this.order.componentPrice + this.order.marginPrice
       if(this.$refs.form.validate()) {
-        if((priceSum < this.order.totalPrice)) {
-          this.order.issueDate = moment(this.issueDate).format()
+        if(priceSum <= this.order.totalPrice) {
+          this.order.creationDate = moment(this.creationDate).format()
+          if(this.issueDate !== []) {
+            console.log("issueDate has been changed for sure, we are in 'else' statement")
+            console.log("take values from forms. this.issueDate = ", this.issueDate)
+            this.order.issueDate = moment(this.issueDate).format()
+            console.log("after formant with moment this.order.issueDate = ", this.order.issueDate)
+          }
           this.valid = true
         }
       } else {
@@ -455,7 +461,6 @@ export default {
       }
     },
     printRepairCertificate() {
-      console.log('Print repair cert')
       this.notificationMessage = 'Сейчас начнется загрузка акта работ. Изменения сохранены будут автоматически'
       this.generated = true
 
@@ -465,11 +470,11 @@ export default {
       }
     },
     saveChanges() {
-      console.log('Save changes')
       this.validate()
       if(this.valid) {
         this.updateRepairOrderAction(this.order)
         this.saveChangesDialog = true
+        console.log("after editing and saved issueDate is = ", this.order.issueDate)
       }
     },
     discardChanges() {

@@ -7,6 +7,7 @@ import App from 'pages/App.vue'
 import store from 'store/store'
 import 'vuetify/dist/vuetify.min.css'
 
+
 Vue.use(Vuetify)
 
 new Vue({

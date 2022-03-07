@@ -12,22 +12,15 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-// const HOST = 'http://localhost:8080/'
-
 export default new Vuex.Store({
     state: {
-        nomList: frontendData.nomList,
-        profile: frontendData.profile,
-        roles: frontendData.roles,
-        statusIdPaid: frontendData.statusIdPaid,
-        statusIdUnrepaired: frontendData.statusIdUnrepaired,
-        statusIdRepaired: frontendData.statusIdRepaired,
         users: [],
         posTypes:[],
         posList:[],
         deviceTypeList:[],
         repairStatusList:[],
         repairOrderList:[],
+        ...frontendData,
     },
     getters: {
         sortedNomList: state => {
@@ -243,6 +236,18 @@ export default new Vuex.Store({
                     ...state.repairOrderList.slice(index + 1)
                 ]
             }
+        },
+
+        addRepairOrderPageMutation(state, repairOrders) {
+
+        },
+
+        updateTotalPagesMutation(state, totalPages) {
+
+        },
+
+        updateCurrentPageMutation(state, currentPage) {
+            state.currentPage = currentPage
         }
     },
     actions: {

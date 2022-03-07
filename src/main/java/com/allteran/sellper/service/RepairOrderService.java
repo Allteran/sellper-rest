@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -49,11 +50,20 @@ public class RepairOrderService {
     public RepairOrder updateOrder(RepairOrder orderFromDb, RepairOrder order) {
         BeanUtils.copyProperties(order, orderFromDb, "id");
 
+        //for some hell reason frontend gives me not that default time as I expect
+        //so we need to check if issueDate is before some far far date, e.g. 01.01.2010 0:00. If it is - that means that we have default issue date
+        LocalDateTime dateCorrections = LocalDateTime.of(2010,1,1,0,0);
+
+        boolean isBefore = orderFromDb.getIssueDate().isBefore(dateCorrections);
+        if(isBefore) {
+            orderFromDb.setIssueDate(DEFAULT_DATE);
+        }
+
         RepairStatus statusPaid = statusService.findById(Long.valueOf(STATUS_PAID_ID));
 
         //if issue date doesn't match to default date that gives to order when it has been created, that means
         //that issueDate has been changed and status should be changed too
-        if(orderFromDb.getIssueDate().equals(DEFAULT_DATE)) {
+        if(!orderFromDb.getIssueDate().equals(DEFAULT_DATE)) {
             orderFromDb.setStatus(statusPaid);
         }
         orderFromDb.setServicePrice(orderFromDb.getTotalPrice() - orderFromDb.getMarginPrice() - orderFromDb.getComponentPrice());

@@ -28,13 +28,11 @@ export default {
     ...mapState(['profile', 'users']),
   },
   beforeMount() {
-    for(let i = 0; i<this.profile.roles.length; i++) {
-      if (this.profile.roles[i] === 'ADMIN') {
-        this.getUserListAction()
-        return
-      }
+    if(this.profile.roles.indexOf('ADMIN') !== -1) {
+      this.getUserListAction()
+    } else {
+      this.$router.push('/404')
     }
-    this.$router.push('/404')
   },
   methods: {
     ...mapActions(['getUserListAction']),

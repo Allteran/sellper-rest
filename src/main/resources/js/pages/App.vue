@@ -7,12 +7,10 @@
     >
       <v-toolbar-title>Sellper</v-toolbar-title>
       <v-btn text
-             v-if="isAdmin"
       >
         Личные продажи
       </v-btn>
       <v-btn text
-             v-if="isAdmin"
       >
         Выполнение KPI
       </v-btn>
@@ -22,12 +20,15 @@
         Ремонт
       </v-btn>
       <v-btn text
+             @click="showReportPanel"
+             v-if="isManager"
       >
         Отчеты
       </v-btn>
 
       <v-btn text
              href="/"
+             v-if="isManager"
       >
         Товары
       </v-btn>
@@ -66,15 +67,11 @@ export default {
   computed: mapState(['profile']),
   data: () => ({
     isAdmin: false,
+    isManager: false,
   }),
   beforeMount() {
-    for(let i = 0; i<this.profile.roles.length; i++) {
-      if (this.profile.roles[i] === 'ADMIN') {
-        this.isAdmin = true
-        return
-      }
-    }
-    this.isAdmin = false
+    this.isAdmin = this.profile.roles.indexOf('ADMIN') !== -1
+    this.isManager = this.profile.roles.indexOf('MANAGER') !== -1
   },
   methods: {
     showProfilePage() {
@@ -90,6 +87,13 @@ export default {
     },
     showRepairOrderPage() {
       this.$router.push('/repair/order')
+    },
+    showReportPanel() {
+      if(this.isManager) {
+        this.$router.push('/report/panel')
+      } else {
+        this.$router.push('/404')
+      }
     }
   }
 }

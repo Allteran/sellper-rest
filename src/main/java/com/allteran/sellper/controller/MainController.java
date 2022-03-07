@@ -5,6 +5,8 @@ import com.allteran.sellper.domain.User;
 import com.allteran.sellper.repo.NomenclatureRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,23 +20,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    private final NomenclatureRepo nomenclatureRepo;
     @Value("${spring.profiles.active:prod}")
     private String profile;
-
     @Value("${repair.status.unrepaired.id}")
     private int REPAIR_STATUS_UNREPAIRED;
-
     @Value("${repair.status.paid.id}")
     private int REPAIR_STATUS_PAID;
-
     @Value("${repair.status.repaired.id}")
     private int REPAIR_STATUS_REPAIRED;
-
-    @Autowired
-    public MainController(NomenclatureRepo nomenclatureRepo) {
-        this.nomenclatureRepo = nomenclatureRepo;
-    }
 
     @GetMapping
     public String index(Model model, @AuthenticationPrincipal User user) {
@@ -44,14 +37,16 @@ public class MainController {
         roles.add(Role.ADMIN);
         roles.add(Role.MANAGER);
 
-
+        System.out.println("APP IS RUNNING IN " + profile + " MODE");
         if (user != null) {
-            data.put("nomList", nomenclatureRepo.findAll());
+
             data.put("profile", user);
             data.put("roles", roles);
             data.put("statusIdPaid", REPAIR_STATUS_PAID);
             data.put("statusIdUnrepaired", REPAIR_STATUS_UNREPAIRED);
             data.put("statusIdRepaired", REPAIR_STATUS_REPAIRED);
+
+
         }
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));

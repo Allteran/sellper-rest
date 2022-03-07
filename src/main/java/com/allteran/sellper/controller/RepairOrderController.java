@@ -17,8 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/repair/order")
 public class RepairOrderController {
-    public static final String HOST = "http://localhost:8080";
-
     private final RepairOrderService repairService;
     private final ExcelService sheetService;
     private ByteArrayInputStream acceptanceCertificate;

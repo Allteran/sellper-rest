@@ -24,13 +24,13 @@
       </v-col>
 
       <v-col
-        :cols="6"
-        sm="4"
-        >
+          :cols="6"
+          sm="4"
+      >
         <v-card
             class="mx-auto"
             @click="showPosManagePage"
-          >
+        >
           <v-card-text>
             <p class="text-h5 text--primary">
               Торговые точки
@@ -118,13 +118,10 @@ export default {
     isAdmin: false,
   }),
   beforeMount() {
-    for(let i = 0; i<this.profile.roles.length; i++) {
-      if (this.profile.roles[i] === 'ADMIN') {
-        this.isAdmin = true
-        return
-      }
+   this.isAdmin = this.profile.roles.indexOf('ADMIN') !== -1
+    if(this.isAdmin === false) {
+      this.$router.push('/404')
     }
-    this.isAdmin = false
   },
   methods: {
     showUserManagePage() {

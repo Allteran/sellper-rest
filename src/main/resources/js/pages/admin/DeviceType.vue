@@ -121,13 +121,11 @@ export default {
     },
   },
   beforeMount() {
-    for(let i = 0; i<this.profile.roles.length; i++) {
-      if (this.profile.roles[i] === 'ADMIN') {
-        this.getDeviceTypeListAction()
-        return
-      }
+    if(this.profile.roles.indexOf('ADMIN') !== -1) {
+      this.getDeviceTypeListAction()
+    } else {
+      this.$router.push('/404')
     }
-    this.$router.push('/404')
   },
   watch: {
     dialog(val) {

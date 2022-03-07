@@ -2,7 +2,6 @@ package com.allteran.sellper.domain;
 
 import com.allteran.sellper.deserializer.OrderDateDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,6 +29,7 @@ public class RepairOrder {
     private RepairStatus status; //*
     private String performedActions;
 
+    @JsonDeserialize(using = OrderDateDeserializer.class)
     private LocalDateTime creationDate;//*
     @JsonDeserialize(using = OrderDateDeserializer.class)
     private LocalDateTime issueDate;//*

@@ -121,13 +121,11 @@ export default {
     },
   },
   beforeMount() {
-    for(let i = 0; i<this.profile.roles.length; i++) {
-      if (this.profile.roles[i] === 'ADMIN') {
-        this.getPOSTypeListAction()
-        return
-      }
+    if(this.profile.roles.indexOf('ADMIN') !== -1) {
+      this.getPOSTypeListAction()
+    } else {
+      this.$router.push('/404')
     }
-    this.$router.push('/404')
   },
   watch: {
     dialog(val) {
@@ -152,7 +150,6 @@ export default {
     },
 
     save() {
-      console.log('this.editedItem.id =', this.editedItem.id)
       if (this.editedItem.id) {
         this.updatePOSTypeAction(this.editedItem)
       } else {

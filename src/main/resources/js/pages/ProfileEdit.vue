@@ -199,9 +199,7 @@ export default {
     ],
     roles:[],
   }),
-  mounted() {
-    console.log(this);
-  },
+
   methods: {
     ...mapActions(['updateProfileAction']),
 

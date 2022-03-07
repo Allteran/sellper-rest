@@ -180,14 +180,12 @@ export default {
     },
   },
   beforeMount() {
-    for(let i = 0; i<this.profile.roles.length; i++) {
-      if (this.profile.roles[i] === 'ADMIN') {
-        this.getPOSListAction()
-        this.getPOSTypeListAction()
-        return
-      }
+    if(this.profile.roles.indexOf('ADMIN') !== -1) {
+      this.getPOSListAction()
+      this.getPOSTypeListAction()
+    } else {
+      this.$router.push('/404')
     }
-    this.$router.push('/404')
   },
   watch: {
     dialog(val) {

@@ -42,6 +42,11 @@ dependencies {
     implementation 'org.apache.poi:poi:5.1.0'
     implementation 'org.apache.poi:poi-ooxml:5.1.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 
 }
 

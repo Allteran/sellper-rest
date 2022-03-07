@@ -223,9 +223,11 @@ export default {
     ...mapState(['users', 'roles']),
   },
   beforeMount() {
-    this.user = this.users.find(u => u.id === this.$route.params.id)
-    console.log('beforeMount')
-    console.log('isActive = ', this.user.active)
+    if(this.profile.roles.indexOf('ADMIN') !== -1) {
+      this.user = this.users.find(u => u.id === this.$route.params.id)
+    } else {
+      this.$router.push('/404')
+    }
   },
   methods: {
     ...mapActions(['updateUserAction']),

@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "@sentry/tracing": "^6.16.1",
+    "@sentry/vue": "^6.16.1",
     "@stomp/stompjs": "^6.1.2",
     "@vuelidate/core": "^2.0.0-alpha.32",
     "@vuelidate/validators": "^2.0.0-alpha.25",
@@ -22,7 +24,7 @@
     "vue": "^2.6.14",
     "vue-resource": "^1.5.3",
     "vue-router": "^3.5.3",
-    "vuetify": "^2.6.0",
+    "vuetify": "^2.6.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

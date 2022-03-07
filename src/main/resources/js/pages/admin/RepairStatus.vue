@@ -121,13 +121,11 @@ export default {
     },
   },
   beforeMount() {
-    for(let i = 0; i<this.profile.roles.length; i++) {
-      if (this.profile.roles[i] === 'ADMIN') {
-        this.getRepairStatusListAction()
-        return
-      }
+    if(this.profile.roles.indexOf('ADMIN') !== -1) {
+      this.getRepairStatusListAction()
+    } else {
+      this.$router.push('/404')
     }
-    this.$router.push('/404')
   },
   watch: {
     dialog(val) {
