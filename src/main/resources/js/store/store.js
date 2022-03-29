@@ -7,7 +7,6 @@ import posTypeApi from "api/posType"
 import posApi from 'api/pointOfSales'
 import deviceTypeApi from 'api/repairDeviceType'
 import repairStatusApi from 'api/repairStatus'
-import repairOrderApi from 'api/repairOrder'
 import axios from 'axios'
 
 Vue.use(Vuex)
@@ -69,11 +68,11 @@ export default new Vuex.Store({
         },
         updateUserMutation(state, user) {
             const index = state.users.findIndex(item => item.id === user.id)
-            if(index >-1) {
+            if (index > -1) {
                 state.users = [
                     ...state.users.slice(0, index),
                     user,
-                    ...state.users.slice(index +1)
+                    ...state.users.slice(index + 1)
                 ]
             }
         },
@@ -92,17 +91,17 @@ export default new Vuex.Store({
         },
         updatePOSTypeMutation(state, type) {
             const index = state.posTypes.findIndex(item => item.id === type.id)
-            if(index>-1) {
+            if (index > -1) {
                 state.posTypes = [
                     ...state.posTypes.slice(0, index),
                     type,
-                    ...state.posTypes.slice(index+1)
+                    ...state.posTypes.slice(index + 1)
                 ]
             }
         },
         removePOSTypeMutation(state, type) {
             const index = state.posTypes.findIndex(item => item.id === type.id)
-            if(index > -1) {
+            if (index > -1) {
                 state.posTypes = [
                     ...state.posTypes.slice(0, index),
                     ...state.posTypes.slice(index + 1)
@@ -124,17 +123,17 @@ export default new Vuex.Store({
         },
         updatePOSMutation(state, pos) {
             const index = state.posList.findIndex(item => item.id === pos.id)
-            if(index>-1) {
+            if (index > -1) {
                 state.posList = [
                     ...state.posList.slice(0, index),
                     pos,
-                    ...state.posList.slice(index+1)
+                    ...state.posList.slice(index + 1)
                 ]
             }
         },
         removePOSMutation(state, pos) {
             const index = state.posList.findIndex(item => item.id === pos.id)
-            if(index > -1) {
+            if (index > -1) {
                 state.posList = [
                     ...state.posList.slice(0, index),
                     ...state.posList.slice(index + 1)
@@ -156,17 +155,17 @@ export default new Vuex.Store({
         },
         updateDeviceTypeMutation(state, type) {
             const index = state.deviceTypeList.findIndex(item => item.id === type.id)
-            if(index>-1) {
+            if (index > -1) {
                 state.deviceTypeList = [
                     ...state.deviceTypeList.slice(0, index),
                     type,
-                    ...state.deviceTypeList.slice(index+1)
+                    ...state.deviceTypeList.slice(index + 1)
                 ]
             }
         },
         removeDeviceTypeMutation(state, type) {
             const index = state.deviceTypeList.findIndex(item => item.id === type.id)
-            if(index > -1) {
+            if (index > -1) {
                 state.deviceTypeList = [
                     ...state.deviceTypeList.slice(0, index),
                     ...state.deviceTypeList.slice(index + 1)
@@ -188,17 +187,17 @@ export default new Vuex.Store({
         },
         updateRepairStatusMutation(state, status) {
             const index = state.repairStatusList.findIndex(item => item.id === status.id)
-            if(index>-1) {
+            if (index > -1) {
                 state.repairStatusList = [
                     ...state.repairStatusList.slice(0, index),
                     status,
-                    ...state.repairStatusList.slice(index+1)
+                    ...state.repairStatusList.slice(index + 1)
                 ]
             }
         },
         removeRepairStatusMutation(state, status) {
             const index = state.repairStatusList.findIndex(item => item.id === status.id)
-            if(index > -1) {
+            if (index > -1) {
                 state.repairStatusList = [
                     ...state.repairStatusList.slice(0, index),
                     ...state.repairStatusList.slice(index + 1)
@@ -220,17 +219,17 @@ export default new Vuex.Store({
         },
         updateRepairOrderMutation(state, order) {
             const index = state.repairOrderList.findIndex(item => item.id === order.id)
-            if(index>-1) {
+            if (index > -1) {
                 state.repairOrderList = [
                     ...state.repairOrderList.slice(0, index),
                     order,
-                    ...state.repairOrderList.slice(index+1)
+                    ...state.repairOrderList.slice(index + 1)
                 ]
             }
         },
         removeRepairOrderMutation(state, order) {
             const index = state.repairOrderList.findIndex(item => item.id === order.id)
-            if(index > -1) {
+            if (index > -1) {
                 state.repairOrderList = [
                     ...state.repairOrderList.slice(0, index),
                     ...state.repairOrderList.slice(index + 1)
@@ -250,6 +249,7 @@ export default new Vuex.Store({
             state.currentPage = currentPage
         }
     },
+
     actions: {
         async addNomenclatureAction({commit}, nomenclature) {
             const result = await nomenclatureApi.add(nomenclature)
@@ -278,7 +278,7 @@ export default new Vuex.Store({
          */
         async updateProfileAction({commit}, user) {
             let result
-            try{
+            try {
                 result = await userApi.update(user)
             } catch (e) {
                 throw new Error('Entered current password is incorrect')
@@ -294,7 +294,7 @@ export default new Vuex.Store({
         async getUserListAction({commit}) {
             const result = await userApi.get()
             const data = await result.json()
-            commit('getUserListMutation',data)
+            commit('getUserListMutation', data)
         },
         async updateUserAction({commit}, user) {
             const result = await userApi.update(user)
@@ -308,7 +308,7 @@ export default new Vuex.Store({
         async getPOSTypeListAction({commit}) {
             const result = await posTypeApi.get()
             const data = await result.json()
-            commit('getPOSTypeListMutation',data)
+            commit('getPOSTypeListMutation', data)
         },
         async addPOSTypeAction({commit}, type) {
             const result = await posTypeApi.add(type)
@@ -327,7 +327,7 @@ export default new Vuex.Store({
         },
         async removePOSTypeAction({commit}, type) {
             const result = await posTypeApi.remove(type.id)
-            if(result.ok) {
+            if (result.ok) {
                 commit('removePOSTypeMutation', type)
             }
         },
@@ -338,7 +338,7 @@ export default new Vuex.Store({
         async getPOSListAction({commit}) {
             const result = await posApi.get()
             const data = await result.json()
-            commit('getPOSListMutation',data)
+            commit('getPOSListMutation', data)
         },
         async addPOSAction({commit}, pos) {
             const result = await posApi.add(pos)
@@ -357,7 +357,7 @@ export default new Vuex.Store({
         },
         async removePOSAction({commit}, pos) {
             const result = await posApi.remove(pos.id)
-            if(result.ok) {
+            if (result.ok) {
                 commit('removePOSMutation', pos)
             }
         },
@@ -368,7 +368,7 @@ export default new Vuex.Store({
         async getDeviceTypeListAction({commit}) {
             const result = await deviceTypeApi.get()
             const data = await result.json()
-            commit('getDeviceTypeListMutation',data)
+            commit('getDeviceTypeListMutation', data)
         },
         async addDeviceTypeAction({commit}, type) {
             const result = await deviceTypeApi.add(type)
@@ -387,7 +387,7 @@ export default new Vuex.Store({
         },
         async removeDeviceTypeAction({commit}, type) {
             const result = await deviceTypeApi.remove(type.id)
-            if(result.ok) {
+            if (result.ok) {
                 commit('removeDeviceTypeMutation', type)
             }
         },
@@ -398,7 +398,7 @@ export default new Vuex.Store({
         async getRepairStatusListAction({commit}) {
             const result = await repairStatusApi.get()
             const data = await result.json()
-            commit('getRepairStatusListMutation',data)
+            commit('getRepairStatusListMutation', data)
         },
         async addRepairStatusAction({commit}, status) {
             const result = await repairStatusApi.add(status)
@@ -417,7 +417,7 @@ export default new Vuex.Store({
         },
         async removeRepairStatusAction({commit}, status) {
             const result = await repairStatusApi.remove(status.id)
-            if(result.ok) {
+            if (result.ok) {
                 commit('removeRepairStatusMutation', status)
             }
         },
@@ -428,7 +428,7 @@ export default new Vuex.Store({
         async getRepairOrderListAction({commit}) {
             const result = await repairOrderApi.get()
             const data = await result.json()
-            commit('getRepairOrderListMutation',data)
+            commit('getRepairOrderListMutation', data)
         },
         async addRepairOrderAction({commit}, order) {
             const result = await repairOrderApi.add(order)
@@ -447,7 +447,7 @@ export default new Vuex.Store({
         },
         async removeRepairOrderAction({commit}, order) {
             const result = await repairOrderApi.remove(order.id)
-            if(result.ok) {
+            if (result.ok) {
                 commit('removeRepairOrderMutation', order)
             }
         },
@@ -458,7 +458,7 @@ export default new Vuex.Store({
          */
         async generateAcceptanceCertificate({commit}, order) {
             const result = await repairOrderApi.getAcceptanceCertificate(order)
-            if(result.ok) {
+            if (result.ok) {
                 axios({
                     url: location.origin + '/api/repair/order/new/generate/acceptance_cert',
                     method: 'GET',

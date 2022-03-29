@@ -17,6 +17,8 @@ import OrderDetails from 'pages/repair/OrderDetails.vue'
 import OrderEdit from 'pages/repair/OrderEdit.vue'
 import StartPage from 'pages/StartPage.vue'
 import ReportPanel from 'pages/report/ReportPanel.vue'
+import OrderConstructor from 'pages/report/OrderConstructor.vue'
+import ReportRepairOrder from 'pages/report/ReportRepairOrder.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +38,8 @@ const routes = [
     {path: '/repair/order/view/:id', name: 'order-details', component: OrderDetails},
     {path: '/repair/order/edit/:id', name: 'order-edit', component: OrderEdit},
     {path: '/report/panel', component: ReportPanel},
+    {path: '/report/order-constructor', component: OrderConstructor},
+    {path: '/report/repair/', component: ReportRepairOrder},
     {path: '/404', component: NotFound},
     {path: '*', redirect: '/404'}
 ]

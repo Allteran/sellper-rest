@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,6 +31,18 @@ public class RepairOrderService {
 
     public List<RepairOrder> getAllOrders() {
         return orderRepo.findAll();
+    }
+
+    /**
+     * Next method will search for all orders during current month regardless of it's status.
+     * It makes range from first to last day of current month
+     */
+    public List<RepairOrder> getAllForRegistry() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime start = now.withDayOfMonth(1);
+        LocalDateTime end = now.withDayOfMonth(now.getMonth().maxLength());
+
+        return orderRepo.findAllByCreationDateRange(start, end);
     }
 
     public RepairOrder findById(Long id) {
@@ -79,5 +90,26 @@ public class RepairOrderService {
         orderRepo.delete(order);
     }
 
+    public List<RepairOrder> findAllByCreationDateAndStatus(LocalDateTime from, LocalDateTime to, List<RepairStatus> statuses) {
+        List<RepairOrder> repairList;
+        repairList = orderRepo.findAllByCreationDateAndStatus(from, to, statuses);
 
+        //We will add last row to list that will display sum of all orders for prices and profit
+//        int service = 0, component = 0, margin = 0, total = 0;
+//        double director = 0, repman = 0, manager = 0;
+//
+//        for (RepairOrder order : repairList) {
+//            service += order.getServicePrice();
+//            component += order.getComponentPrice();
+//            margin += order.getMarginPrice();
+//            total += order.getTotalPrice();
+//
+//            director += order.getDirectorProfit();
+//            repman += order.getRepManProfit();
+//            manager += order.getManagerProfit();
+//        }
+//        RepairOrder lastRow = new RepairOrder();
+//
+        return repairList;
+    }
 }

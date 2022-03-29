@@ -10,6 +10,7 @@
       >
         <v-card
             class="mx-auto"
+            @click="repairReportConstructor"
         >
           <v-card-text>
             <p class="text-h5 text--primary">
@@ -60,7 +61,9 @@ export default {
     }
   },
   methods: {
-
+    repairReportConstructor() {
+      this.$router.push('/report/order-constructor')
+    }
   }
 }
 </script>

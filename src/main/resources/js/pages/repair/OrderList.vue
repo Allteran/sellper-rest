@@ -6,8 +6,13 @@
         :items-per-page="15"
         @click:row="clickRow"
         fixed-header
+        :search="search"
         sort-by="issueDate"
         class="elevation-1"
+        :footer-props="{
+          'items-per-page-options': [10, 20, 30, 40, 50, 100],
+          'items-per-page-text':'Отображаемое количество',
+        }"
     >
       <template v-slot:item.author="{ item }">
         <td>{{item.author.firstName}} {{item.author.lastName}}</td>
@@ -36,6 +41,13 @@
               inset
               vertical
           ></v-divider>
+          <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Поиск заявки"
+              single-line
+              hide-details
+          ></v-text-field>
         </v-toolbar>
       </template>
     </v-data-table>
@@ -72,7 +84,7 @@ export default {
       {text: 'Точка продаж', value: 'pos.street'},
       {text: 'Сотрудник', value: 'author'}
     ],
-
+    search: '',
   }),
   beforeMount() {
     this.getRepairOrderListAction()

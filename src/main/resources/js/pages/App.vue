@@ -6,14 +6,14 @@
         app
     >
       <v-toolbar-title>Sellper</v-toolbar-title>
-      <v-btn text
-      >
-        Личные продажи
-      </v-btn>
-      <v-btn text
-      >
-        Выполнение KPI
-      </v-btn>
+<!--      <v-btn text-->
+<!--      >-->
+<!--        Личные продажи-->
+<!--      </v-btn>-->
+<!--      <v-btn text-->
+<!--      >-->
+<!--        Выполнение KPI-->
+<!--      </v-btn>-->
       <v-btn text
              @click="showRepairOrderPage"
       >
@@ -26,12 +26,12 @@
         Отчеты
       </v-btn>
 
-      <v-btn text
-             href="/"
-             v-if="isManager"
-      >
-        Товары
-      </v-btn>
+<!--      <v-btn text-->
+<!--             href="/"-->
+<!--             v-if="isManager"-->
+<!--      >-->
+<!--        Товары-->
+<!--      </v-btn>-->
       <v-btn text
              @click="showAdminPanel"
              v-if="isAdmin"

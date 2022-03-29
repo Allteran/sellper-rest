@@ -449,10 +449,7 @@ export default {
         if(priceSum <= this.order.totalPrice) {
           this.order.creationDate = moment(this.creationDate).format()
           if(this.issueDate !== []) {
-            console.log("issueDate has been changed for sure, we are in 'else' statement")
-            console.log("take values from forms. this.issueDate = ", this.issueDate)
             this.order.issueDate = moment(this.issueDate).format()
-            console.log("after formant with moment this.order.issueDate = ", this.order.issueDate)
           }
           this.valid = true
         }
@@ -474,7 +471,6 @@ export default {
       if(this.valid) {
         this.updateRepairOrderAction(this.order)
         this.saveChangesDialog = true
-        console.log("after editing and saved issueDate is = ", this.order.issueDate)
       }
     },
     discardChanges() {

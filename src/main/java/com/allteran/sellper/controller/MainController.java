@@ -37,9 +37,7 @@ public class MainController {
         roles.add(Role.ADMIN);
         roles.add(Role.MANAGER);
 
-        System.out.println("APP IS RUNNING IN " + profile + " MODE");
         if (user != null) {
-
             data.put("profile", user);
             data.put("roles", roles);
             data.put("statusIdPaid", REPAIR_STATUS_PAID);

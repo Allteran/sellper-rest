@@ -6,7 +6,7 @@ public final class Views {
 
     public interface IdNamePrice extends Id{
     }
-
+    
     public interface FullNomenclature extends IdNamePrice {
 
     }

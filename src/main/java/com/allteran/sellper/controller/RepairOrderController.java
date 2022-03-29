@@ -29,8 +29,8 @@ public class RepairOrderController {
     }
 
     @GetMapping
-    public List<RepairOrder> getAllOrders() {
-        return repairService.getAllOrders();
+    public List<RepairOrder> getAllOrdersForRegistry() {
+        return repairService.getAllForRegistry();
     }
 
     @GetMapping("{id}")
