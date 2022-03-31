@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,6 +19,8 @@ public class RepairOrderService {
     private String STATUS_CREATED_ID;
     @Value("${repair.status.paid.id}")
     private String STATUS_PAID_ID;
+    @Value("${repair.status.unrepaired.id}")
+    private String STATUS_UNREPAIRED_ID;
 
     private static final LocalDateTime DEFAULT_DATE = LocalDateTime.of(2000,1,1,1,1);
 
@@ -34,15 +38,36 @@ public class RepairOrderService {
     }
 
     /**
-     * Next method will search for all orders during current month regardless of it's status.
-     * It makes range from first to last day of current month
+     * Next method will search for all orders by special params:
+     * - all unpaid orders
+     * - all done and paid orders in range of current month
      */
     public List<RepairOrder> getAllForRegistry() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime start = now.withDayOfMonth(1);
         LocalDateTime end = now.withDayOfMonth(now.getMonth().maxLength());
 
-        return orderRepo.findAllByCreationDateRange(start, end);
+        List<RepairStatus> inProgress = statusService.getAll();
+
+        RepairStatus paid = statusService.findById(Long.valueOf(STATUS_PAID_ID));
+        RepairStatus unrepaired = statusService.findById(Long.valueOf(STATUS_UNREPAIRED_ID));
+
+        List<RepairStatus> done = new ArrayList<>();
+        done.add(paid);
+        done.add(unrepaired);
+
+        inProgress.removeAll(done);
+
+        //first - lets find all orders that in progress
+        List<RepairOrder> searchResult = orderRepo.findAllByStatus(inProgress);
+        //then we'll find orders that done (paid or unrepaired) and was given in current month
+        List<RepairOrder> doneOrders = orderRepo.findAllByIssueDateAndStatus(start, end, done);
+
+        //merge two collections in one - searchResult
+        searchResult.addAll(doneOrders);
+
+
+        return searchResult;
     }
 
     public RepairOrder findById(Long id) {

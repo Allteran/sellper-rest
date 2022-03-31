@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import 'es6-promise/auto' //to support old browsers
 import Vuex from 'vuex'
-import nomenclatureApi from "api/nomList"
 import userApi from "api/user";
 import posTypeApi from "api/posType"
 import posApi from 'api/pointOfSales'
 import deviceTypeApi from 'api/repairDeviceType'
 import repairStatusApi from 'api/repairStatus'
+import repairOrderApi from 'api/repairOrder'
 import axios from 'axios'
 
 Vue.use(Vuex)

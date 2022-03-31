@@ -24,4 +24,10 @@ public interface RepairOrderRepo extends JpaRepository<RepairOrder, Long> {
 
     @Query("select o from RepairOrder o where o.creationDate between :from and :to and o.status in :statusList order by o.creationDate desc")
     List<RepairOrder> findAllByCreationDateAndStatus(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to, @Param("statusList")List<RepairStatus> statusList);
+
+    @Query("select o from RepairOrder o where o.status in :statusList order by o.creationDate desc")
+    List<RepairOrder> findAllByStatus(List<RepairStatus> statusList);
+
+    @Query("select o from RepairOrder o where o.issueDate between :from and :to and o.status in :statusList order by o.issueDate desc")
+    List<RepairOrder> findAllByIssueDateAndStatus(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to, @Param("statusList")List<RepairStatus> statusList);
 }

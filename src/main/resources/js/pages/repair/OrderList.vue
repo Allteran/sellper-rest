@@ -3,11 +3,14 @@
     <v-data-table
         :headers="headers"
         :items="repairOrderList"
+        :loading="loading"
+        :loading-text="'Загружаем данные'"
+        :no-data-text="'Ничено не найдено :('"
+        :no-results-text="'Ничено не найдено :('"
         :items-per-page="15"
         @click:row="clickRow"
         fixed-header
         :search="search"
-        sort-by="issueDate"
         class="elevation-1"
         :footer-props="{
           'items-per-page-options': [10, 20, 30, 40, 50, 100],
@@ -85,9 +88,12 @@ export default {
       {text: 'Сотрудник', value: 'author'}
     ],
     search: '',
+    loading: true,
   }),
   beforeMount() {
-    this.getRepairOrderListAction()
+    this.getRepairOrderListAction().then(res => {
+      this.loading = false
+    })
   },
   computed: {
     ...mapState(['profile', 'repairOrderList', 'statusIdRepaired', 'statusIdUnrepaired', 'statusIdPaid']),

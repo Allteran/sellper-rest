@@ -4,20 +4,37 @@
         :headers="headers"
         :items="repairList"
         :loading="loading"
+        :search="search"
         :loading-text="'Загружаем данные'"
+        :no-data-text="'Ничено не найдено :('"
+        :no-results-text="'Ничено не найдено :('"
         class="elevation-1"
+        :footer-props="{
+          'items-per-page-options': [10, 20, 30, 40, 50, 100],
+          'items-per-page-text':'Отображаемое количество',
+        }"
     >
       <template v-slot:top>
         <v-toolbar
+            class="mx-1"
             flat
         >
-          <v-toolbar-title>ОТЧЕТ ПО РЕМОНТУ | ПОИСК ПО ДАТЕ ПРИЕМА</v-toolbar-title>
+          <v-toolbar-title>ОТЧЕТ ПО РЕМОНТУ - ПО ДАТЕ ПРИЕМА</v-toolbar-title>
           <v-divider
               class="mx-4"
               inset
               vertical
           ></v-divider>
-          <v-btn>
+          <v-text-field
+              class="mx-1"
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Поиск заявки"
+              single-line
+              hide-details
+          ></v-text-field>
+          <v-btn
+              class="mx-1">
             Экспорт в XLS
           </v-btn>
         </v-toolbar>
@@ -119,6 +136,7 @@ export default {
     managerSum: 0,
     directorSum: 0,
     loading: true,
+    search: '',
     headers: [
       {text: 'Устройство', value: 'deviceName'},
       {text: 'Дата приема', value: 'creationDate'},
@@ -142,6 +160,10 @@ export default {
       return
     }
     if (this.$route.query.md === 'creation') {
+      if(!this.$route.query.f || !this.$route.query.t || !this.$route.query.st) {
+        this.$router.push('/404')
+        return
+      }
       this.getReportRepairListCreationDate(this.$route.query.f, this.$route.query.t, this.$route.query.st).then(res => {
         this.repairList = res.data
         this.initPriceSum()
